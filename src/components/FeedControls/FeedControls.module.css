@@ -1,0 +1,30 @@
+.feedHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.feedTitle {
+  font-family: var(--font-display);
+}
+
+.sortButtons {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.sortButtons .btn {
+  padding: 7px 16px;
+  font-size: 0.85rem;
+}
+
+.feed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  padding-bottom: var(--space-8);
+}

@@ -1,0 +1,54 @@
+.controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.searchWrap {
+  position: relative;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+.searchInput {
+  padding-left: 38px;
+  width: 260px;
+}
+
+.geoError {
+  color: var(--color-error);
+  font-size: 0.875rem;
+  margin-bottom: var(--space-4);
+}
+
+.nearbyNote {
+  font-size: 0.85rem;
+  color: var(--color-amber);
+  margin-bottom: var(--space-4);
+}
+
+.count {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-5);
+  padding-bottom: var(--space-8);
+}
+
+@media (max-width: 640px) {
+  .searchInput { width: 100%; }
+  .controls { width: 100%; }
+}

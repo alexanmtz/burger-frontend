@@ -1,0 +1,42 @@
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.star {
+  background: none;
+  border: none;
+  padding: 2px;
+  color: var(--color-amber);
+  line-height: 1;
+  transition: transform var(--transition-fast), color var(--transition-fast);
+}
+
+.star:not(:disabled):hover {
+  transform: scale(1.15);
+}
+
+.star.empty {
+  color: var(--color-border);
+}
+
+.readonly .star {
+  cursor: default;
+}
+
+/* Sizes */
+.sm .star svg, .sm svg { width: 14px; height: 14px; }
+.md .star svg, .md svg { width: 20px; height: 20px; }
+.lg .star svg, .lg svg { width: 26px; height: 26px; }
+
+.sm .star { padding: 1px; }
+.lg .star { padding: 3px; }
+
+.score {
+  margin-left: var(--space-2);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-amber);
+  min-width: 32px;
+}

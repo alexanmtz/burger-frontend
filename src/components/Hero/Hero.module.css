@@ -1,0 +1,57 @@
+.hero {
+  padding: var(--space-4) 0 var(--space-12);
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+}
+
+@media screen and (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+  .heroText {
+    flex: 1;
+    margin-right: 0;
+    margin-bottom: var(--space-6);
+  }
+
+}
+
+.heroText {
+  margin-right: var(--space-6);
+  text-align: right;
+}
+
+.heroText h1 {
+  line-height: 1.2;
+  margin-bottom: var(--space-4);
+}
+
+.heroAccent {
+  font-style: italic;
+  color: var(--color-amber);
+}
+
+.heroAccentAlt {
+  font-style: italic;
+  color: var(--color-amber-dim);
+}
+
+.heroSub {
+  flex: 1;
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: var(--space-5);
+}
+
+.heroCta {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}

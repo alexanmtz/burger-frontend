@@ -1,0 +1,51 @@
+/* This file has been moved to the ScoreBreakdown folder. */
+/* Original location: /Users/alexandremagno/projects/burger-frontend/src/components/ScoreBreakdown.module.css */
+/* New location: /Users/alexandremagno/projects/burger-frontend/src/components/ScoreBreakdown/ScoreBreakdown.module.css */
+
+.breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 90px 1fr 36px;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.track {
+  height: 6px;
+  background: var(--color-border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  width: var(--bar-width, 0%);
+  background: linear-gradient(90deg, var(--color-amber-dim), var(--color-amber));
+  border-radius: 3px;
+  animation: growBar 800ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes growBar {
+  from { width: 0; }
+  to   { width: var(--bar-width); }
+}
+
+.value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-amber);
+  text-align: right;
+}

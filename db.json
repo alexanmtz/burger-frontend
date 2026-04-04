@@ -1,0 +1,267 @@
+{
+  "restaurants": [
+    {
+      "id": "r1",
+      "name": "Bun & Board",
+      "address": "Vesterbrogade 42",
+      "city": "Copenhagen",
+      "lat": 55.6736,
+      "lng": 12.5508,
+      "coverImage": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80",
+      "cuisine": "American Smash",
+      "priceRange": "$$",
+      "openingHours": [
+        {
+          "day": "Mon–Thu",
+          "hours": "11:00–22:00"
+        },
+        {
+          "day": "Fri–Sat",
+          "hours": "11:00–00:00"
+        },
+        {
+          "day": "Sunday",
+          "hours": "12:00–21:00"
+        }
+      ],
+      "phone": "+45 33 12 34 56",
+      "website": "https://bunandboard.dk",
+      "averageScore": 6.9,
+      "reviewCount": 2
+    },
+    {
+      "id": "r2",
+      "name": "The Patty Collective",
+      "address": "Nørrebrogade 108",
+      "city": "Copenhagen",
+      "lat": 55.6892,
+      "lng": 12.5533,
+      "coverImage": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&q=80",
+      "cuisine": "Craft Burgers",
+      "priceRange": "$$$",
+      "openingHours": [
+        {
+          "day": "Tue–Thu",
+          "hours": "12:00–22:00"
+        },
+        {
+          "day": "Fri–Sat",
+          "hours": "12:00–23:00"
+        },
+        {
+          "day": "Sun–Mon",
+          "hours": "Closed"
+        }
+      ],
+      "phone": "+45 35 22 11 44",
+      "website": "https://pattycollective.dk",
+      "averageScore": 9.2,
+      "reviewCount": 89
+    },
+    {
+      "id": "r3",
+      "name": "Smoke & Stack",
+      "address": "Istedgade 72",
+      "city": "Copenhagen",
+      "lat": 55.6697,
+      "lng": 12.5503,
+      "coverImage": "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=800&q=80",
+      "cuisine": "BBQ & Burgers",
+      "priceRange": "$$",
+      "openingHours": [
+        {
+          "day": "Mon–Sun",
+          "hours": "12:00–22:00"
+        }
+      ],
+      "phone": "+45 33 44 55 66",
+      "website": "https://smokeandstack.dk",
+      "averageScore": 8.9,
+      "reviewCount": 3
+    },
+    {
+      "id": "r4",
+      "name": "Grind House",
+      "address": "Strøget 14",
+      "city": "Copenhagen",
+      "lat": 55.6782,
+      "lng": 12.5718,
+      "coverImage": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=800&q=80",
+      "cuisine": "Gourmet Burgers",
+      "priceRange": "$$$",
+      "openingHours": [
+        {
+          "day": "Mon–Fri",
+          "hours": "11:30–22:00"
+        },
+        {
+          "day": "Sat–Sun",
+          "hours": "12:00–23:00"
+        }
+      ],
+      "phone": "+45 33 99 88 77",
+      "website": "https://grindhouse.dk",
+      "averageScore": 8.9,
+      "reviewCount": 312
+    }
+  ],
+  "reviews": [
+    {
+      "id": "rv1",
+      "userId": "u4",
+      "restaurantId": "r2",
+      "burgerName": "The Collective Classic",
+      "caption": "Absolutely mind-blowing smash burger. The crust on this patty was insane — perfectly seared on a flat-top, caramelised onions, American cheese waterfall.",
+      "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80",
+      "scores": {
+        "taste": 9.5,
+        "texture": 9,
+        "presentation": 8.5
+      },
+      "overallScore": 9,
+      "comments": 12,
+      "createdAt": "2024-03-18T14:32:00Z"
+    },
+    {
+      "id": "rv2",
+      "userId": "u1",
+      "restaurantId": "r1",
+      "burgerName": "The Board Smash",
+      "caption": "Double smash, truffle aioli, aged cheddar. The bun-to-patty ratio was on point. Slight grease drip but that's part of the experience.",
+      "imageUrl": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600&q=80",
+      "scores": {
+        "taste": 8.5,
+        "texture": 8,
+        "presentation": 9
+      },
+      "overallScore": 8.5,
+      "comments": 7,
+      "createdAt": "2024-03-15T19:11:00Z"
+    },
+    {
+      "id": "rv3",
+      "userId": "u2",
+      "restaurantId": "r4",
+      "burgerName": "Grind Signature",
+      "caption": "Bone marrow butter brioche bun. The wagyu patty was cooked to a perfect medium. This is the bar.",
+      "imageUrl": "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=600&q=80",
+      "scores": {
+        "taste": 9.5,
+        "texture": 9.5,
+        "presentation": 9
+      },
+      "overallScore": 9.3,
+      "comments": 24,
+      "createdAt": "2024-03-12T20:45:00Z"
+    },
+    {
+      "id": "rv4",
+      "userId": "u3",
+      "restaurantId": "r3",
+      "burgerName": "Smoke Stack Original",
+      "caption": "Hickory smoked brisket on a brioche bun with their house pickles. The smokiness was dialled in just right.",
+      "imageUrl": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=600&q=80",
+      "scores": {
+        "taste": 8,
+        "texture": 7.5,
+        "presentation": 8.5
+      },
+      "overallScore": 8,
+      "comments": 5,
+      "createdAt": "2024-03-10T13:20:00Z"
+    },
+    {
+      "id": "rv5",
+      "userId": "u1",
+      "restaurantId": "r2",
+      "burgerName": "Truffle Smash Stack",
+      "caption": "Triple stack, parmesan crisp, shaved truffle. Presentation is gallery-worthy. Taste matches the look — rare to say.",
+      "imageUrl": "https://images.unsplash.com/photo-1607013251379-e6eecfffe234?w=600&q=80",
+      "scores": {
+        "taste": 9,
+        "texture": 8.5,
+        "presentation": 10
+      },
+      "overallScore": 9.2,
+      "comments": 18,
+      "createdAt": "2024-03-08T18:05:00Z"
+    },
+    {
+      "id": "sC3r2G0uSjA",
+      "userId": "u1",
+      "overallScore": 5.3,
+      "comments": 0,
+      "createdAt": "2026-04-04T19:49:33.202Z",
+      "restaurantId": "r1",
+      "burgerName": "Classic Mash",
+      "caption": "Test",
+      "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80",
+      "scores": {
+        "taste": 4,
+        "texture": 6,
+        "presentation": 6
+      }
+    },
+    {
+      "id": "mIIPN0OOQRM",
+      "userId": "u1",
+      "overallScore": 9.3,
+      "comments": 0,
+      "createdAt": "2026-04-04T20:45:21.035Z",
+      "restaurantId": "r3",
+      "burgerName": "Classic",
+      "caption": "The classic is the best, they have a special sauce very good",
+      "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80",
+      "scores": {
+        "taste": 10,
+        "texture": 8,
+        "presentation": 10
+      }
+    },
+    {
+      "id": "crRt9Vs5HvA",
+      "userId": "u1",
+      "overallScore": 9.3,
+      "restaurantId": "r3",
+      "burgerName": "X-Burguer",
+      "caption": "Very good :)",
+      "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80",
+      "scores": {
+        "taste": 10,
+        "texture": 10,
+        "presentation": 8
+      }
+    }
+  ],
+  "users": [
+    {
+      "id": "u1",
+      "name": "Alex Burger",
+      "avatar": "https://i.pravatar.cc/150?img=11",
+      "bio": "Chasing the perfect patty since 2018.",
+      "reviewCount": 42
+    },
+    {
+      "id": "u2",
+      "name": "Sofia Grillmaster",
+      "avatar": "https://i.pravatar.cc/150?img=47",
+      "bio": "Meat is my love language.",
+      "reviewCount": 31
+    },
+    {
+      "id": "u3",
+      "name": "Marcus Bun",
+      "avatar": "https://i.pravatar.cc/150?img=68",
+      "bio": "Double patty or nothing.",
+      "reviewCount": 19
+    },
+    {
+      "id": "u4",
+      "name": "Nina Smoke",
+      "avatar": "https://i.pravatar.cc/150?img=32",
+      "bio": "Smash burgers changed my life.",
+      "reviewCount": 55
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

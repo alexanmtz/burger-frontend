@@ -1,0 +1,174 @@
+/* Skeleton */
+.skeletonCard {
+  width: 100%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.skeletonHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+}
+
+.skeletonAvatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.skeletonLines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeletonLine {
+  height: 14px;
+  border-radius: 4px;
+}
+
+.skeletonImage {
+  width: 100%;
+  aspect-ratio: 4/3;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  gap: var(--space-4);
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.userName {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+
+.meta {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.restaurantLink {
+  color: var(--color-amber);
+  transition: opacity var(--transition-fast);
+}
+.restaurantLink:hover { opacity: 0.8; }
+
+/* Image */
+.imageWrap {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.card:hover .image { transform: scale(1.03); }
+
+.burgerNameOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.75));
+  padding: var(--space-5) var(--space-4) var(--space-3);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #fff;
+}
+
+/* Body */
+.body {
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.caption {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--color-text);
+}
+
+.starsRow { display: flex; }
+
+.breakdownToggle {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0;
+  transition: color var(--transition-fast);
+  align-self: flex-start;
+}
+.breakdownToggle:hover { color: var(--color-amber); }
+
+.breakdown {
+  padding-top: var(--space-2);
+  animation: fadeInUp 250ms both;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  border-top: 1px solid var(--color-border);
+}
+
+.action {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  transition: color var(--transition-fast);
+  padding: 0;
+}
+.action:hover { color: var(--color-text); }
