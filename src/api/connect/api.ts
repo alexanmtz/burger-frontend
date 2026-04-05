@@ -1,7 +1,7 @@
 import { supabase } from '../auth/supabase';
 import mockDb from '../../../db.json';
 
-const BASE_URL = '/api';
+const apiUrl = import.meta.env.VITE_API_URL;
 const supabaseEnabled = import.meta.env.VITE_SUPABASE_ENABLED === 'true';
 const shouldUseMock = import.meta.env.VITE_USE_MOCKS === 'true';
 
@@ -38,7 +38,7 @@ function mockFetch<T>(path: string): T {
 export async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> {
   if (shouldUseMock) return mockFetch<T>(path);
 
-  const res = await fetch(`${BASE_URL}${path}`, {
+  const res = await fetch(`${apiUrl}${path}`, {
     ...options,
     headers: {
       'Content-Type': 'application/json',
