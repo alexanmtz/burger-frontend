@@ -1,7 +1,15 @@
-const BASE_URL = '/api';
+import { supabase } from '../auth/supabase';
 
-function authHeaders(): Record<string, string> {
-  const token = localStorage.getItem('burger_token');
+const BASE_URL = '/api';
+const supabaseEnabled = import.meta.env.VITE_SUPABASE_ENABLED === 'true';
+
+async function getSupabaseToken(): Promise<string> {
+  const { data: { session } } = await supabase.auth.getSession()
+  return session?.access_token || '';
+}
+
+async function authHeaders(): Promise<Record<string, string>> {
+  const token = supabaseEnabled ? localStorage.getItem('burger_token') : await getSupabaseToken();
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
@@ -10,7 +18,7 @@ export async function apiFetch<T>(path: string, options: RequestInit = {}): Prom
     ...options,
     headers: {
       'Content-Type': 'application/json',
-      ...authHeaders(),
+      ...(await authHeaders()),
       ...(options.headers ?? {}),
     },
   });
