@@ -11,7 +11,7 @@ npm run dev
 ## Local API
 
 npm install -D json-server
-npx json-server db.json --port 3000
+npx json-server db.json --port 3001
 
 ## Architecture
 

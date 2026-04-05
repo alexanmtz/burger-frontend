@@ -306,7 +306,7 @@ Each component uses a co-located CSS Module for scoped overrides.
 VITE_USE_SUPABASE=true
 VITE_SUPABASE_URL=<your-project-url>
 VITE_SUPABASE_ANON_KEY=<your-anon-key>
-VITE_API_URL=http://localhost:3000   # unused at runtime, proxy handles routing
+VITE_API_URL=http://localhost:3001   # unused at runtime, proxy handles routing
 ```
 
 **Vite proxy**

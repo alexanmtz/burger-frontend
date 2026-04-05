@@ -1,5 +1,9 @@
 ### Considerations and reflections
 - [x] What considerations regarding security and user privacy did you have when designing the system?
+
+
+
+
 - [ ] How would the system scale with increased workloads and do you have any bottlenecks?
 
 **Constraints for the solution:**
