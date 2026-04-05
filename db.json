@@ -101,8 +101,8 @@
       ],
       "phone": "+45 33 99 88 77",
       "website": "https://grindhouse.dk",
-      "averageScore": 8,
-      "reviewCount": 2
+      "averageScore": 7.3,
+      "reviewCount": 3
     }
   ],
   "reviews": [
@@ -351,6 +351,21 @@
         "texture": 7,
         "presentation": 7
       }
+    },
+    {
+      "id": "8Wcqcowi3o0",
+      "userId": "db91db93-b84d-48dd-8b5a-cadfa9253e81",
+      "overallScore": 6,
+      "createdAt": "2026-04-05T15:08:20.483Z",
+      "restaurantId": "r4",
+      "burgerName": "Grind Burguer",
+      "caption": "Grind testing",
+      "imageUrl": "https://dctzhlqhplgzuvmqxjkt.supabase.co/storage/v1/object/public/burger-images/db91db93-b84d-48dd-8b5a-cadfa9253e81/1775401700209-burguer-sample.jpeg",
+      "scores": {
+        "taste": 4,
+        "texture": 7,
+        "presentation": 7
+      }
     }
   ],
   "users": [
@@ -359,41 +374,36 @@
       "name": "Joane Doe",
       "email": "joane.doe@example.com",
       "avatar": "https://i.pravatar.cc/150?img=5",
-      "bio": "Burger enthusiast and part-time food critic.",
-      "reviewCount": 27
+      "bio": "Burger enthusiast and part-time food critic."
     },
     {
       "id": "db91db93-b84d-48dd-8b5a-cadfa9253e81",
       "name": "Alex Burger",
       "email": "alex.burger@example.com",
       "avatar": "https://i.pravatar.cc/150?img=11",
-      "bio": "Chasing the perfect patty since 2018.",
-      "reviewCount": 42
+      "bio": "Chasing the perfect patty since 2018."
     },
     {
       "id": "db91db93-b84d-48dd-8b5a-cadfa9253e82",
       "name": "Sofia Grillmaster",
       "email": "sofia.grillmaster@example.com",
       "avatar": "https://i.pravatar.cc/150?img=47",
-      "bio": "Meat is my love language.",
-      "reviewCount": 31
+      "bio": "Meat is my love language."
     },
     {
       "id": "db91db93-b84d-48dd-8b5a-cadfa9253e83",
       "name": "Marcus Bun",
       "email": "marcus.bun@example.com",
       "avatar": "https://i.pravatar.cc/150?img=68",
-      "bio": "Double patty or nothing.",
-      "reviewCount": 19
+      "bio": "Double patty or nothing."
     },
     {
       "id": "db91db93-b84d-48dd-8b5a-cadfa9253e84",
       "name": "Nina Smoke",
       "email": "nina.smoke@example.com",
       "avatar": "https://i.pravatar.cc/150?img=32",
-      "bio": "Smash burgers changed my life.",
-      "reviewCount": 55
+      "bio": "Smash burgers changed my life."
     }
   ],
-  "$schema": ["./node_modules/json-server/schema.json"]
+  "$schema": "./node_modules/json-server/schema.json"
 }

@@ -9,7 +9,7 @@ export function DashboardPage() {
   const { user } = useAuth();
   const { data: reviews, isLoading, error } = useUserReviews(user?.id);
 
-  const userName = user?.name.split(' ')[0] || user?.metadata?.name || 'Foodie';
+  const userName = user?.name.split(' ')[0] || 'Foodie';
 
   const avgScore = reviews?.length
     ? (reviews.reduce((sum, r) => sum + r.overallScore, 0) / reviews.length).toFixed(1)
@@ -31,7 +31,7 @@ export function DashboardPage() {
         <hr className="divider" />
         <div className={styles.stats}>
           <div className={styles.stat}>
-            <span className={styles.statValue}>{user?.reviewCount ?? 0}</span>
+            <span className={styles.statValue}>{reviews?.length ?? 0}</span>
             <span className={styles.statLabel}>Reviews</span>
           </div>
           {avgScore && (
