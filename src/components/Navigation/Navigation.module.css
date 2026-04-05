@@ -14,7 +14,6 @@
   gap: var(--space-5);
 }
 
-/* Logo */
 .logo {
   display: flex;
   align-items: center;
@@ -81,6 +80,19 @@
   border: 2px solid var(--color-border);
 }
 
+.avatarPlaceholder {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--color-border);
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
 .userIdentity {
   display: flex;
   align-items: center;
@@ -97,7 +109,6 @@
   color: var(--color-text);
 }
 
-/* Hamburger */
 .hamburger {
   display: none;
   flex-direction: column;

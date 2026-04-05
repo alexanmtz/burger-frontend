@@ -34,11 +34,15 @@ export function Navigation() {
           {user ? (
             <div className={styles.userMenu}>
               <Link to="/dashboard" className={styles.userIdentity}>
-                <img
-                  src={user.avatar}
-                  alt={user.name}
-                  className={styles.avatar}
-                />
+                { user.avatar ? (
+                  <img
+                    src={user.avatar}
+                    alt={user.name}
+                    className={styles.avatar}
+                  />
+                ) : 
+                  <span className={styles.avatarPlaceholder}>{user.name.charAt(0)}</span>
+                }
                 <span className={styles.userName}>{user.name}</span>
               </Link>
               <button className="btn btn-ghost" onClick={handleSignOut} style={{ padding: '6px 14px', fontSize: '0.82rem' }}>

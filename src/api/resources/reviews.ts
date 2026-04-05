@@ -1,6 +1,9 @@
 import { apiFetch as api } from '../connect/api';
 import type { Restaurant, Review } from '@/types/types';
 import { getCurrentUser } from '../connect/user';
+import { supabase } from '../auth/supabase';
+
+const useSupabase = import.meta.env.VITE_USE_SUPABASE === 'true';
 
 async function updateRestaurantStats(restaurantId: string): Promise<void> {
   const reviews = await api<Review[]>(`/reviews?restaurantId=${restaurantId}`);
@@ -52,7 +55,8 @@ export interface ReviewPayload {
 }
 
 export async function submitReview(payload: ReviewPayload): Promise<Review> {
-  const user = await getCurrentUser();
+  const user = useSupabase ? await supabase.auth.getSession().then(res => res.data.session?.user) : await getCurrentUser();
+  if(!user) throw new Error('User must be authenticated to submit a review.');
   const newReview: Review = {
     id: `rv${Date.now()}`,
     userId: user.id,

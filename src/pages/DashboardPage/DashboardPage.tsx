@@ -9,19 +9,22 @@ export function DashboardPage() {
   const { user } = useAuth();
   const { data: reviews, isLoading, error } = useUserReviews(user?.id);
 
+  const userName = user?.name.split(' ')[0] || user?.metadata?.name || 'Foodie';
+
   const avgScore = reviews?.length
     ? (reviews.reduce((sum, r) => sum + r.overallScore, 0) / reviews.length).toFixed(1)
     : null;
+
 
   return (
     <main className="page">
       <div className="container">
         <div className={styles.header}>
           {user?.avatar && (
-            <img src={user.avatar} alt={user.name} className={styles.avatar} />
+            <img src={user.avatar} alt={userName} className={styles.avatar} />
           )}
           <div>
-            <h1 className={styles.greeting}>Welcome back, {user?.name?.split(' ')[0]}!</h1>
+            <h1 className={styles.greeting}>Welcome back, {userName}!</h1>
             {user?.bio && <p className="text-muted">{user.bio}</p>}
           </div>
         </div>

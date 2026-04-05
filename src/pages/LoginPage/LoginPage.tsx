@@ -1,8 +1,10 @@
-import { useState, type FormEvent } from 'react';
+import { useState, type JSX } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { redirectAfterLogin } from '@/storage/redirectAfterLogin';
 import styles from './LoginPage.module.css';
+
+const mockLoginEnabled = import.meta.env.VITE_USE_SUPABASE === 'false';
 
 export function LoginPage() {
   const { signIn } = useAuth();
@@ -13,9 +15,9 @@ export function LoginPage() {
   const [email, setEmail]       = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading]   = useState(false);
-  const [error, setError]       = useState<string | null>(null);
+  const [error, setError]       = useState<JSX.Element | string | null>(null);
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email || !password) { setError('Please fill in all fields.'); return; }
     setLoading(true);
@@ -25,7 +27,7 @@ export function LoginPage() {
       redirectAfterLogin.clear();
       navigate(from, { replace: true });
     } catch {
-      setError('Invalid credentials. Try any email + password in mock mode.');
+      setError(<>Invalid credentials. <br />Please try again with a valid email and password.</>);
       setLoading(false);
     }
   };
@@ -40,12 +42,13 @@ export function LoginPage() {
             <p className="text-muted">Sign in to share your burger reviews.</p>
           </div>
 
-          {/* Mock mode notice */}
-          <div className={styles.mockNotice}>
-            <strong>Demo mode:</strong> any email and password will work.
-          </div>
+          {mockLoginEnabled && (
+            <div className={styles.mockNotice}>
+              <strong>Demo mode:</strong> any email and password will work.
+            </div>
+          )}
 
-          <form onSubmit={handleSubmit} className={styles.form} noValidate>
+          <form onSubmit={handleSubmit} className={styles.form}>
             <div className="form-group">
               <label className="form-label" htmlFor="email">Email</label>
               <input

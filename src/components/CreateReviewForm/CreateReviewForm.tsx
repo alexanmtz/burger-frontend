@@ -68,7 +68,7 @@ export function CreateReviewForm({ restaurant, onSuccess }: Props) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.restaurantId) { setValidationError('Please select a restaurant.'); return; }
+    if (!form.restaurantId && !restaurant?.id) { setValidationError('Please select a restaurant.'); return; }
     if (!form.burgerName.trim()) { setValidationError('Please enter the burger name.'); return; }
     if (!form.caption.trim()) { setValidationError('Please write a caption.'); return; }
 
@@ -84,20 +84,21 @@ export function CreateReviewForm({ restaurant, onSuccess }: Props) {
       });
       imageUrl = publicUrl;
     }
+    if(!validationError && !imageUpload.error && !submitReview.error && (form.restaurantId || restaurant?.id)) {
+      await submitReview.mutateAsync({
+        restaurantId: form.restaurantId || restaurant?.id || '',
+        burgerName: form.burgerName,
+        caption: form.caption,
+        imageUrl,
+        scores: {
+          taste: form.taste,
+          texture: form.texture,
+          presentation: form.presentation,
+        },
+      });
 
-    await submitReview.mutateAsync({
-      restaurantId: form.restaurantId,
-      burgerName: form.burgerName,
-      caption: form.caption,
-      imageUrl,
-      scores: {
-        taste: form.taste,
-        texture: form.texture,
-        presentation: form.presentation,
-      },
-    });
-
-    onSuccess();
+      onSuccess();
+    }
   };
 
   const submitting = imageUpload.isPending || submitReview.isPending;
@@ -129,8 +130,6 @@ export function CreateReviewForm({ restaurant, onSuccess }: Props) {
           )}
         </div>
       )}
-
-      {/* Burger name */}
       <div className="form-group">
         <label className="form-label" htmlFor="burgerName">Burger name</label>
         <input
@@ -183,8 +182,6 @@ export function CreateReviewForm({ restaurant, onSuccess }: Props) {
           <div className="score-circle large">{overallScore}</div>
         </div>
       </div>
-
-      {/* Image upload */}
       <div className="form-group">
         <label className="form-label">Photo</label>
         <div
