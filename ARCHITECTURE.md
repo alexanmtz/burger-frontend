@@ -3,57 +3,115 @@
 ## C4 Model: Context Diagram
 
 ```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                         System Context                                  │
-│                                                                         │
-│   ┌──────────┐         ┌─────────────────────┐       ┌───────────────┐ │
-│   │  User    │ ──────► │  Burger Social App  │ ────► │  Supabase     │ │
-│   │(browser) │         │  (React SPA)        │       │  (auth +      │ │
-│   └──────────┘         │                     │       │   storage)    │ │
-│                        │  Vite dev server /  │       └───────────────┘ │
-│                        │  static build       │                         │
-│                        │                     │       ┌───────────────┐ │
-│                        │                     │ ────► │  JSON Server  │ │
-│                        └─────────────────────┘       │  (mock REST   │ │
-│                                                       │   backend,    │ │
-│                                                       │   dev only)   │ │
-│                                                       └───────────────┘ │
-└─────────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                              System Context                                  │
+│                                                                              │
+│   ┌──────────┐       ┌──────────────────────────┐       ┌─────────────────┐ │
+│   │  User    │ ────► │   Burger Social App      │ ────► │   Supabase      │ │
+│   │(browser) │       │   (React SPA)            │       │   (auth +       │ │
+│   └──────────┘       │                          │       │    storage)     │ │
+│                      │   Hosted on Vercel        │       └─────────────────┘ │
+│                      │   (global edge network)  │                            │
+│                      │                          │       ┌─────────────────┐  │
+│                      │                          │ ────► │   Burger        │  │
+│                      └──────────────────────────┘       │   Backend APIs  │  │
+│                                                         │   (microservices│  │
+│                                                         │    — see below) │  │
+│                                                         └─────────────────┘  │
+└──────────────────────────────────────────────────────────────────────────────┘
 ```
 
 **Actors**
-- **User** — a burger enthusiast accessing the platform via browser.
-- **Burger Social App** — the React SPA documented here.
+- **User** — a burger enthusiast accessing the platform via browser or mobile web.
+- **Burger Social App** — the React SPA documented here, deployed as a static site on Vercel.
 - **Supabase** — managed backend providing authentication (email/password) and object storage for burger photos.
-- **JSON Server** — local mock REST API (`localhost:3001`) used during development when `VITE_USE_SUPABASE=false`.
+- **Burger Backend APIs** — set of microservices handling restaurants, reviews, and user data (out of scope; mocked via JSON Server locally).
 
 ---
 
 ## C4 Model: Container Diagram
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  Burger Social Platform                                                     │
-│                                                                             │
-│  ┌──────────────────────────────┐       ┌───────────────────────────────┐  │
-│  │  React SPA                   │       │  Supabase (managed)           │  │
-│  │  ─────────────────           │       │  ──────────────────────────── │  │
-│  │  Vite 8 + React 19           │       │  Auth (email/password, JWT,   │  │
-│  │  React Router v7             │ ────► │  session auto-refresh)        │  │
-│  │  TanStack React Query v5     │       │                               │  │
-│  │  CSS Modules + CSS vars      │       │  Storage bucket: burger-images│  │
-│  │  TypeScript                  │       │  (direct upload from browser) │  │
-│  └──────────────────────────────┘       └───────────────────────────────┘  │
-│                                                                             │
-│  ┌──────────────────────────────┐                                           │
-│  │  JSON Server (dev only)      │                                           │
-│  │  ─────────────────────────── │                                           │
-│  │  Port 3001, file-based DB    │                                           │
-│  │  Proxied via Vite: /api →    │                                           │
-│  │  localhost:3001              │                                           │
-│  └──────────────────────────────┘                                           │
-└─────────────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│  Burger Social Platform                                                          │
+│                                                                                  │
+│  ┌─────────────────────────────────┐       ┌───────────────────────────────┐    │
+│  │  React SPA                      │       │  Supabase (managed)           │    │
+│  │  ──────────────────────────     │       │  ──────────────────────────── │    │
+│  │  Vite 8 + React 19              │       │  Auth (email/password, JWT,   │    │
+│  │  React Router v7                │ ────► │  session auto-refresh)        │    │
+│  │  TanStack React Query v5        │       │                               │    │
+│  │  CSS Modules + CSS vars         │       │  Storage bucket: burger-images│    │
+│  │  TypeScript                     │       │  (direct upload from browser) │    │
+│  │                                 │       └───────────────────────────────┘    │
+│  │  Deployed to: Vercel            │                                             │
+│  │  ─ static build (vite build)    │       ┌───────────────────────────────┐    │
+│  │  ─ served from Vercel edge      │ ────► │  Burger Backend APIs          │    │
+│  │  ─ automatic HTTPS + CDN        │       │  (microservices, future)      │    │
+│  │  ─ preview deploys per PR       │       │  Proxied via /api in dev      │    │
+│  └─────────────────────────────────┘       └───────────────────────────────┘    │
+│                                                                                  │
+│  ┌─────────────────────────────────┐                                             │
+│  │  JSON Server (dev only)         │                                             │
+│  │  ──────────────────────────     │                                             │
+│  │  Port 3001, file-based DB       │                                             │
+│  │  Proxied via Vite: /api →       │                                             │
+│  │  localhost:3001                 │                                             │
+│  └─────────────────────────────────┘                                             │
+└──────────────────────────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## Cloud Hosting
+
+The React SPA is deployed as a static site on **Vercel**.
+
+### Why Vercel
+
+| Concern | How Vercel addresses it |
+|---|---|
+| **Global delivery** | Edge network with 100+ PoPs — static assets served from the closest region |
+| **HTTPS** | Automatic TLS certificate provisioning and renewal |
+| **CI/CD** | Git-push deploys: every push to `main` triggers a production build; every PR gets a preview URL |
+| **Zero-config** | Detects Vite automatically; no bucket policies, distribution configs, or origin access controls to manage |
+| **Env vars** | Secrets set in Vercel dashboard, injected at build time as `VITE_*` vars |
+| **Redirects / SPA routing** | A single `vercel.json` rewrite rule sends all paths to `index.html` (required for `BrowserRouter`) |
+
+### Deployment flow
+
+```
+Developer pushes to GitHub
+        │
+        ▼
+Vercel CI picks up commit
+        │
+        ├── npm run build   (tsc --noEmit + vite build → dist/)
+        │
+        └── dist/ uploaded to Vercel edge network
+                │
+                ▼
+        https://burger-frontend.vercel.app   (production)
+        https://<branch>-burger-frontend.vercel.app  (preview)
+```
+
+### `vercel.json` (SPA routing)
+
+```json
+{
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
+```
+
+### Environment variables (production)
+
+```
+VITE_USE_SUPABASE=true
+VITE_SUPABASE_URL=<project-url>      # set in Vercel dashboard
+VITE_SUPABASE_ANON_KEY=<anon-key>   # set in Vercel dashboard
+```
+
+> **API calls in production** point to the real Burger Backend microservices via `VITE_API_URL`. The Vite dev proxy (`/api → localhost:3001`) is a dev-only convenience and has no effect in the Vercel build.
 
 ---
 
@@ -281,7 +339,7 @@ Current test coverage:
 | Area | Current state | Better path |
 |---|---|---|
 | **Mock JWT** | `mock-jwt-token-${email}` string — not a real JWT | Replace with Supabase auth entirely |
-| **S3 upload** | Stubbed — returns a placeholder URL in mock mode | Wire up real presigned URL endpoint |
+| **Image upload** | Stubbed in mock mode — returns a placeholder URL | Wire up Supabase Storage fully or a presigned-URL endpoint on the backend |
 | **`isOpenNow()`** | Hard-coded 10:00–23:00 heuristic, ignores actual hours field | Parse stored opening hours per day |
 | **Distance calc** | Flat-earth approximation | Haversine formula |
 | **Real-time** | Feed is request-driven, not pushed | Supabase Realtime or SSE for live like counts |
