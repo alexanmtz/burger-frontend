@@ -23,6 +23,7 @@ export function StarRating({ value, onChange, readonly = false, size = 'md' }: S
 
   return (
     <div
+      data-testid="star-rating"
       className={`${styles.stars} ${styles[size]} ${readonly ? styles.readonly : ''}`}
       role={readonly ? 'img' : 'group'}
       aria-label={`Rating: ${value} out of 10`}

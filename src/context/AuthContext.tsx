@@ -13,6 +13,7 @@ function toAppUser(sbUser: SupabaseUser): User {
   return {
     id: sbUser.id,
     name: sbUser.user_metadata?.name ?? sbUser.email ?? 'Unknown',
+    email: sbUser.email ?? '',
     avatar: sbUser.user_metadata?.avatar_url ?? '',
     bio: sbUser.user_metadata?.bio ?? '',
     reviewCount: 0,
