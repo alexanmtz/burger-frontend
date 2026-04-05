@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
+import { redirectAfterLogin } from '@/storage/redirectAfterLogin';
 import styles from './Navigation.module.css';
 
 export function Navigation() {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleSignOut = async () => {
@@ -44,7 +46,12 @@ export function Navigation() {
               </button>
             </div>
           ) : (
-            <Link to="/login" className="btn btn-primary" style={{ padding: '8px 20px', fontSize: '0.9rem' }}>
+            <Link
+              to="/login"
+              className="btn btn-primary"
+              style={{ padding: '8px 20px', fontSize: '0.9rem' }}
+              onClick={() => redirectAfterLogin.set(location.pathname)}
+            >
               Sign in
             </Link>
           )}

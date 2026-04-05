@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { BurgerReviewCard } from '@/components/BurgerReviewCard/BurgerReviewCard';
 import { useAuth } from '@/hooks/useAuth';
+import { redirectAfterLogin } from '@/storage/redirectAfterLogin';
 import styles from './RestaurantDetailPage.module.css';
 import { isOpenNow } from '@/utils/time';
 import { useRestaurant } from '@/hooks/restaurants/useRestaurant';
@@ -53,6 +54,8 @@ export function RestaurantDetailPage() {
 
   const open = isOpenNow(restaurant.openingHours);
 
+  const handleClick = () => redirectAfterLogin.set(`/restaurants/${id}/review`);
+
   return (
     <main className="page">
       <div className={styles.cover}>
@@ -84,7 +87,12 @@ export function RestaurantDetailPage() {
                   + Write a review
                 </Link>
               ) : (
-                <Link to="/login" className="btn btn-ghost" style={{ fontSize: '0.85rem', padding: '8px 16px' }}>
+                <Link
+                  to="/login"
+                  className="btn btn-ghost"
+                  style={{ fontSize: '0.85rem', padding: '8px 16px' }}
+                  onClick={handleClick}
+                >
                   Sign in to review
                 </Link>
               )}

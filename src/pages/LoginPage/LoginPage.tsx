@@ -1,14 +1,14 @@
 import { useState, type FormEvent } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
+import { redirectAfterLogin } from '@/storage/redirectAfterLogin';
 import styles from './LoginPage.module.css';
 
 export function LoginPage() {
   const { signIn } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const from = (location.state as { from?: { pathname: string } })?.from?.pathname ?? '/dashboard';
+  const from = redirectAfterLogin.get();
 
   const [email, setEmail]       = useState('');
   const [password, setPassword] = useState('');
@@ -22,6 +22,7 @@ export function LoginPage() {
     setError(null);
     try {
       await signIn({ email, password });
+      redirectAfterLogin.clear();
       navigate(from, { replace: true });
     } catch {
       setError('Invalid credentials. Try any email + password in mock mode.');
