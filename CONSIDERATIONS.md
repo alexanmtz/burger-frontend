@@ -10,7 +10,6 @@
 **Delivery expectations:**
 - [ ] We would like to see your thoughts and plans documented as Context and Container diagrams as described in the [C4 model](https://c4model.com/)
 - [ ] All files and code must be uploaded to your public GitHub repository (or similar)
-  - [ ] **Please note that no reference to or mentioning of the LEGO group must exist anywhere in the project files or frontend presentation**
 - [ ] Oral presentation of the solution, including an explanation about architecture decisions, reflections and possible limitations of the solution
 
 **What we are looking for:**
