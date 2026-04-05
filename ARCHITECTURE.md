@@ -7,23 +7,25 @@
 │                         System Context                                  │
 │                                                                         │
 │   ┌──────────┐         ┌─────────────────────┐       ┌───────────────┐ │
-│   │  User    │ ──────► │  Burger Social App  │ ────► │  AWS S3       │ │
-│   │(browser/ │         │  (React SPA)        │       │  (image store)│ │
-│   │ mobile)  │         │                     │       └───────────────┘ │
-│   └──────────┘         │  Hosted on AWS      │                         │
-│                        │  CloudFront + S3    │       ┌───────────────┐ │
-│                        │                     │ ────► │  Burger       │ │
-│                        │                     │       │  Backend      │ │
-│                        └─────────────────────┘       │  (Microsvcs)  │ │
+│   │  User    │ ──────► │  Burger Social App  │ ────► │  Supabase     │ │
+│   │(browser) │         │  (React SPA)        │       │  (auth +      │ │
+│   └──────────┘         │                     │       │   storage)    │ │
+│                        │  Vite dev server /  │       └───────────────┘ │
+│                        │  static build       │                         │
+│                        │                     │       ┌───────────────┐ │
+│                        │                     │ ────► │  JSON Server  │ │
+│                        └─────────────────────┘       │  (mock REST   │ │
+│                                                       │   backend,    │ │
+│                                                       │   dev only)   │ │
 │                                                       └───────────────┘ │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
 **Actors**
-- **User** — a burger enthusiast accessing the platform via browser (desktop or mobile) or a native mobile app in the future.
+- **User** — a burger enthusiast accessing the platform via browser.
 - **Burger Social App** — the React SPA documented here.
-- **Burger Backend** — a set of microservices (see below) providing the REST API.
-- **AWS S3** — object storage for user-uploaded burger photos.
+- **Supabase** — managed backend providing authentication (email/password) and object storage for burger photos.
+- **JSON Server** — local mock REST API (`localhost:3001`) used during development when `VITE_USE_SUPABASE=false`.
 
 ---
 
@@ -34,29 +36,21 @@
 │  Burger Social Platform                                                     │
 │                                                                             │
 │  ┌──────────────────────────────┐       ┌───────────────────────────────┐  │
-│  │  React SPA                   │       │  API Gateway (AWS API GW)     │  │
+│  │  React SPA                   │       │  Supabase (managed)           │  │
 │  │  ─────────────────           │       │  ──────────────────────────── │  │
-│  │  Vite + React 19             │       │  TLS termination, rate limit, │  │
-│  │  React Router (client-side)  │ ────► │  JWT validation, routing to   │  │
-│  │  CSS Modules + CSS variables │       │  microservices                │  │
-│  │                              │       └──────────────┬────────────────┘  │
-│  │  Hosted: CloudFront + S3     │                      │                   │
-│  └──────────────────────────────┘           ┌──────────▼──────────┐        │
-│                                             │  Microservices       │        │
-│  ┌──────────────────────────────┐           │  ─────────────────   │        │
-│  │  AWS S3 (image bucket)       │           │  Auth Service        │        │
-│  │  ─────────────────────────── │ ◄──────── │  Restaurant Service  │        │
-│  │  Pre-signed URL upload flow  │           │  Review Service      │        │
-│  │  Public CDN read via         │           │  User Service        │        │
-│  │  CloudFront                  │           │                      │        │
-│  └──────────────────────────────┘           │  (AWS Lambda/ECS)    │        │
-│                                             └──────────┬───────────┘        │
-│  ┌──────────────────────────────┐                      │                   │
-│  │  Database layer              │ ◄────────────────────┘                   │
-│  │  ──────────────────────────  │                                           │
-│  │  PostgreSQL (RDS)            │                                           │
-│  │  ElastiCache (Redis) —       │                                           │
-│  │    feed caching, sessions    │                                           │
+│  │  Vite 8 + React 19           │       │  Auth (email/password, JWT,   │  │
+│  │  React Router v7             │ ────► │  session auto-refresh)        │  │
+│  │  TanStack React Query v5     │       │                               │  │
+│  │  CSS Modules + CSS vars      │       │  Storage bucket: burger-images│  │
+│  │  TypeScript                  │       │  (direct upload from browser) │  │
+│  └──────────────────────────────┘       └───────────────────────────────┘  │
+│                                                                             │
+│  ┌──────────────────────────────┐                                           │
+│  │  JSON Server (dev only)      │                                           │
+│  │  ─────────────────────────── │                                           │
+│  │  Port 3001, file-based DB    │                                           │
+│  │  Proxied via Vite: /api →    │                                           │
+│  │  localhost:3001              │                                           │
 │  └──────────────────────────────┘                                           │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -67,108 +61,229 @@
 
 ### Tech Stack
 
-| Concern | Choice | Rationale |
+| Concern | Choice | Version |
 |---|---|---|
-| Framework | React 19 | Component model, ecosystem, concurrent features |
-| Build tool | Vite 8 | Sub-second HMR, native ESM, fast cold starts |
-| Routing | React Router v7 | Declarative, file-route ready, loader pattern |
-| Styling | CSS Modules + CSS custom properties | Zero runtime, scoped, themeable without a heavy library |
-| Language | TypeScript | Type safety across the API boundary, better DX |
-| State | React context + local state | Proportionate — no global store needed at this scale |
+| Framework | React | ^19.2.4 |
+| Build tool | Vite | ^8.0.1 |
+| Routing | React Router DOM | ^7.14.0 |
+| Server state | TanStack React Query | ^5.96.2 |
+| Auth + Storage | Supabase JS | ^2.101.1 |
+| Styling | CSS Modules + CSS custom properties | — |
+| Language | TypeScript | ~5.9.3 |
+| Testing | Vitest + Testing Library | ^4.1.2 / ^16.3.2 |
+| Mock backend | JSON Server | ^1.0.0-beta.15 |
 
-### Key patterns
+### Source Directory Layout
 
-**API Layer (`src/services/api.ts`)**
-All API calls are defined in one file. A flag (`VITE_USE_REAL_API`) switches between the mock implementation (stubbed locally) and the real backend. This means the app can be demoed offline and the integration can be turned on with a single env var.
+```
+src/
+├── api/
+│   ├── auth/
+│   │   └── supabase.ts          # Supabase client (session persist, auto-refresh)
+│   ├── client/
+│   │   └── queryClient.ts       # React Query client config
+│   ├── connect/
+│   │   ├── api.ts               # Base apiFetch() — reads JWT, adds auth header
+│   │   ├── auth.ts              # Mock sign-in/sign-out endpoints
+│   │   └── user.ts              # Current user from localStorage / JSON Server
+│   └── resources/
+│       ├── images.ts            # Image upload (Supabase Storage real, S3 mocked)
+│       ├── restaurants.ts       # getRestaurants, getRestaurant, search, nearby
+│       ├── reviews.ts           # CRUD reviews, feed, stats update
+│       └── users.ts             # fetchUser(s)
+├── components/
+│   ├── BurgerReviewCard/        # Review card (fetches user + restaurant)
+│   ├── CardGrid/                # Generic grid with loading/empty states
+│   ├── CreateReviewForm/        # Review form with image upload integration
+│   ├── Feed/                    # Review list (wraps CardGrid)
+│   ├── FeedControls/            # Sort toggle (recent | top)
+│   ├── Hero/                    # Homepage banner
+│   ├── ImageUpload/             # Drag-drop image picker with preview
+│   ├── Navigation/              # Top nav, auth status, mobile menu
+│   ├── OpeningHours/            # Hours display
+│   ├── ProtectedRoute/          # Auth guard — redirects to /login
+│   ├── RestaurantCard/          # Restaurant preview with distance
+│   ├── RestaurantInfo/          # Contact / location links
+│   ├── ScoreBreakdown/          # Taste / texture / presentation scores
+│   ├── StarRating/              # Interactive 1–5 star (maps to 0–10 scale)
+│   └── Typography/PageTitle/    # Page heading with optional subtitle + controls
+├── context/
+│   ├── AuthContext.tsx          # AuthProvider + useAuth hook
+│   └── auth.ts                  # AuthContextValue type
+├── hooks/
+│   ├── useAuth.ts
+│   ├── common/
+│   │   ├── useGeolocation.ts    # Browser Geolocation API with permission state
+│   │   └── useImageUpload.ts    # React Query mutation wrapping images.ts
+│   ├── feed/
+│   │   └── useFeed.ts           # Feed query (sort: recent | top)
+│   ├── restaurants/
+│   │   ├── useNearbyRestaurants.ts
+│   │   ├── useRestaurant.ts
+│   │   ├── useRestaurants.ts
+│   │   └── useSearchRestaurants.ts
+│   ├── reviews/
+│   │   ├── useReviews.ts
+│   │   ├── useSubmitReview.ts   # Mutation + cache invalidation
+│   │   └── useUserReviews.ts
+│   └── users/
+│       ├── useUser.ts
+│       └── useUsers.ts
+├── pages/
+│   ├── HomePage/                # Feed + hero
+│   ├── LoginPage/               # Email/password sign-in
+│   ├── DashboardPage/           # Profile + review history (protected)
+│   ├── RestaurantDetailPage/    # Restaurant + reviews + stats
+│   ├── RestaurantsPage/         # Searchable list + geolocation sort
+│   ├── ReviewsPage/             # Full review feed
+│   ├── SubmitReviewPage/        # Review creation (protected)
+│   └── NotFoundPage/            # 404
+├── storage/
+│   └── redirectAfterLogin.ts   # sessionStorage helper for post-login nav
+├── tests/
+│   ├── setup.ts                 # Vitest setup — imports jest-dom matchers
+│   ├── StarRating.test.tsx
+│   └── ProtectedRoute.test.tsx
+├── types/
+│   └── types.ts                 # Domain types: User, Restaurant, Review
+├── utils/
+│   └── time.ts                  # formatDate(), isOpenNow()
+├── App.tsx                      # Root — wraps tree in QueryClientProvider
+├── Router.tsx                   # BrowserRouter, AuthProvider, all routes
+├── index.css                    # Global CSS variables + utility classes
+└── main.tsx                     # Entry point
+```
+
+### Key Patterns
+
+**API Layer (`src/api/`)**
+The API layer is split into three folders:
+- `connect/` — HTTP plumbing. `apiFetch()` reads the JWT from `localStorage` (`burger_token`), injects `Authorization: Bearer` and delegates to `fetch`. The Vite dev proxy rewrites `/api/*` → `http://localhost:3001/*` (JSON Server).
+- `resources/` — Domain functions (`getRestaurants`, `submitReview`, etc.) built on `apiFetch`.
+- `auth/` — Supabase client singleton (session persistence + token auto-refresh).
+
+**Mock vs. Supabase toggle**
+A single env var controls which backend is active:
+
+| `VITE_USE_SUPABASE` | Auth | Image storage | REST data |
+|---|---|---|---|
+| `true` | Supabase auth | `burger-images` Supabase bucket | JSON Server via `/api` proxy |
+| `false` | Mock JWT (localStorage) | Hardcoded placeholder URL | JSON Server via `/api` proxy |
 
 **Auth flow**
-JWT is stored in `localStorage`, injected into every request via `authHeaders()`. `AuthContext` restores the session on load. `ProtectedRoute` wraps any route that requires authentication and preserves the original destination for post-login redirect.
+```
+Supabase mode                     Mock mode
+─────────────────────────────     ──────────────────────────────────
+signIn(email, pw)                 POST /api/auth/login
+  → supabase.auth.signInWithPassword  → returns { token, user }
+  → session auto-persisted            → stored in localStorage
+  → onAuthStateChange listener         (burger_token, burger_user)
+  → maps Supabase user → User type
+```
+`ProtectedRoute` checks `AuthContext`. If unauthenticated, stores the intended path in `sessionStorage` and redirects to `/login`. After sign-in the user is sent back to that path.
 
-**Image upload (S3 pre-signed URL flow)**
+**Image upload flow (Supabase Storage)**
 ```
-Browser                     API                       S3
-  │                          │                         │
-  │── POST /upload-url ──────►│                         │
-  │◄─ { uploadUrl, pubUrl } ──│                         │
-  │                          │                         │
-  │── PUT uploadUrl (file) ──────────────────────────► │
-  │◄─ 200 OK ────────────────────────────────────────── │
-  │                          │                         │
-  │── POST /reviews (pubUrl) ►│                         │
+Browser                         Supabase Storage
+  │                                     │
+  │── supabase.storage.upload() ───────►│
+  │◄─ { data, error } ─────────────────│
+  │                                     │
+  │── storage.getPublicUrl() ──────────►│
+  │◄─ publicUrl ───────────────────────│
+  │                                     │
+  │── POST /api/reviews (publicUrl) ───► JSON Server
 ```
-The image never passes through the backend API — it goes straight to S3. This keeps the backend stateless and dramatically reduces API server load for media.
+The file goes directly from the browser to Supabase Storage. The REST API only stores the resulting public URL.
+An S3 pre-signed URL path exists in `src/api/resources/images.ts` but is currently stubbed — it returns a placeholder Unsplash URL in mock mode.
+
+**Server state (`TanStack React Query`)**
+All data fetching and mutations go through React Query hooks (`src/hooks/`). This provides automatic caching, background re-fetching, and loading/error states without manual `useEffect` patterns. `useSubmitReview` invalidates the relevant query keys on success so the feed and restaurant stats refresh automatically.
+
+**Routing**
+```
+BrowserRouter
+  AuthProvider
+    Navigation (global)
+    Routes
+      /                    → HomePage
+      /reviews             → ReviewsPage
+      /restaurants         → RestaurantsPage
+      /restaurants/:id     → RestaurantDetailPage
+      /restaurants/:id/review → SubmitReviewPage (ProtectedRoute)
+      /submit              → SubmitReviewPage (ProtectedRoute)
+      /login               → LoginPage
+      /dashboard           → DashboardPage (ProtectedRoute)
+      *                    → NotFoundPage
+```
+
+**CSS architecture**
+Global design tokens live in `src/index.css` as CSS custom properties:
+- Colour palette: dark background (`#111110`), amber brand accent, surface/border/text scales, semantic states (error, success, open/closed)
+- Typography: Playfair Display (headings), DM Sans (body) — loaded from Google Fonts
+- Spacing scale: `--space-1` (4px) → `--space-8` (64px)
+- Shadows, border radii, transition speeds
+- Global utility classes: `.btn`, `.btn-primary`, `.btn-ghost`, `.form-*`, `.card`, `.badge`, `.glass`, `.text-muted`
+
+Each component uses a co-located CSS Module for scoped overrides.
 
 ---
 
-## Backend Microservices (reflections)
+## Development Setup
 
-The backend is out of scope but the frontend is designed around this assumed service topology:
+**Scripts**
 
-| Service | Responsibility | Stack suggestion |
-|---|---|---|
-| **Auth Service** | Login, JWT issue/refresh, logout | Node.js / AWS Cognito |
-| **Restaurant Service** | CRUD for restaurants, search, geospatial queries | Node.js + PostGIS (lat/lng) |
-| **Review Service** | Submit/fetch reviews, like toggle, feed aggregation | Node.js + Redis (feed cache) |
-| **User Service** | Profiles, avatar upload, review history | Node.js |
-| **Media Service** | Pre-signed S3 URL generation, CDN invalidation | Lambda function |
-
-All services sit behind **AWS API Gateway** which handles:
-- TLS termination
-- JWT validation (shared secret / JWKS)
-- Rate limiting per user/IP
-- Request routing
-
----
-
-## Cloud Hosting
-
-```
-User → Route 53 (DNS)
-     → CloudFront (CDN, edge cache, HTTPS)
-     → S3 (SPA static files — index.html + JS/CSS bundles)
-
-User → CloudFront → API Gateway → Lambda/ECS services → RDS PostgreSQL
-                                                       → ElastiCache Redis
-                              → S3 (burger photos, via pre-signed URLs)
-```
-
-**Why CloudFront + S3 for the SPA?**
-- Zero server to manage for static assets
-- Global edge caching — fast load anywhere
-- Cache-bust via content-hashed filenames (Vite handles this)
-- `index.html` served with `Cache-Control: no-cache` so deploys propagate immediately
-
----
-
-## Security Considerations
-
-| Area | Decision |
+| Command | Effect |
 |---|---|
-| **Auth tokens** | JWTs stored in `localStorage`. Trade-off: XSS risk vs. cookie complexity (CSRF). For a higher-security version: `httpOnly` cookies + CSRF tokens. |
-| **Image uploads** | Pre-signed S3 URLs expire in 5 minutes. The backend never touches the binary. File type is validated client-side and server-side via content inspection (not just extension). |
-| **Geolocation** | Coordinates are used only client-side for sorting. Never sent to analytics or stored server-side without explicit consent. Documented in `useGeolocation.ts`. |
-| **API rate limiting** | Applied at API Gateway — prevents review spam and like-farming. |
-| **Content moderation** | Out of scope for v1 but S3 supports triggering a Lambda on upload for AWS Rekognition moderation. |
-| **HTTPS** | Enforced everywhere — CloudFront redirects HTTP → HTTPS. |
-| **No third-party data leakage** | Unsplash images are used in demo only. Production would serve all images via the S3/CloudFront CDN under our own domain. |
+| `npm run dev` | Vite dev server (HMR, `/api` proxy to port 3001) |
+| `npm run server` | JSON Server on port 3001 (mock REST backend) |
+| `npm run build` | `tsc --noEmit` + `vite build` |
+| `npm run preview` | Serve production build locally |
+| `npm run lint` | ESLint |
+| `npm run test` | Vitest (jsdom environment) |
+
+**Environment variables**
+
+```
+VITE_USE_SUPABASE=true
+VITE_SUPABASE_URL=<your-project-url>
+VITE_SUPABASE_ANON_KEY=<your-anon-key>
+VITE_API_URL=http://localhost:3000   # unused at runtime, proxy handles routing
+```
+
+**Vite proxy**
+```ts
+// vite.config.ts
+proxy: {
+  '/api': {
+    target: 'http://localhost:3001',
+    rewrite: (path) => path.replace(/^\/api/, ''),
+  },
+}
+```
 
 ---
 
-## Scalability
+## Testing
 
-| Bottleneck | Mitigation |
-|---|---|
-| **Social feed queries** | Redis cache for the top-N feed. Invalidated on new review submission. |
-| **Image reads** | CloudFront CDN — images served from edge, not origin. |
-| **Geospatial search** | PostGIS index on `(lat, lng)`. Alternative: Elasticsearch geo-distance query for full-text + geo combined. |
-| **Review write throughput** | Review Service behind an SQS queue if write volume spikes — decouple submission from DB write. |
-| **Frontend bundle size** | Vite vendor chunk splitting separates React from app code. Route-based code splitting can be added with `React.lazy()` per page. |
+**Stack:** Vitest 4.1 + Testing Library React 16 + jsdom
+
+`src/tests/setup.ts` imports `@testing-library/jest-dom` to extend Vitest matchers.
+
+Current test coverage:
+- `StarRating.test.tsx` — component rendering and interaction
+- `ProtectedRoute.test.tsx` — auth guard redirect behaviour
 
 ---
 
 ## Limitations & Trade-offs
 
-- **No real-time updates** — the feed is polled, not pushed. WebSocket or Server-Sent Events would enable live like counts.
-- **No offline support** — a Service Worker + cache strategy would enable PWA behaviour.
-- **localStorage JWT** — acceptable for a demo; production should evaluate `httpOnly` cookie approach.
-- **Mock geolocation distance** — the distance calculation uses a flat-earth approximation; production should use the Haversine formula or PostGIS `ST_DWithin`.
+| Area | Current state | Better path |
+|---|---|---|
+| **Mock JWT** | `mock-jwt-token-${email}` string — not a real JWT | Replace with Supabase auth entirely |
+| **S3 upload** | Stubbed — returns a placeholder URL in mock mode | Wire up real presigned URL endpoint |
+| **`isOpenNow()`** | Hard-coded 10:00–23:00 heuristic, ignores actual hours field | Parse stored opening hours per day |
+| **Distance calc** | Flat-earth approximation | Haversine formula |
+| **Real-time** | Feed is request-driven, not pushed | Supabase Realtime or SSE for live like counts |
+| **Offline** | No service worker | PWA + cache strategy |
+| **localStorage JWT** | XSS risk in mock mode | `httpOnly` cookie once on a real auth server |
