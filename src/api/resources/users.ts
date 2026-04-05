@@ -1,13 +1,5 @@
 import { apiFetch } from '../connect/api';
-
-export type User = {
-  id: string;
-  name: string;
-  avatar: string;
-  bio: string;
-  joinDate: string;
-  reviewCount: number;
-};
+import type { User } from '../../types/types';
 
 export async function fetchUsers(): Promise<User[]> {
   return apiFetch<User[]>('/users');

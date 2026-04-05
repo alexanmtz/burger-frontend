@@ -9,7 +9,7 @@ async function getSupabaseToken(): Promise<string> {
 }
 
 async function authHeaders(): Promise<Record<string, string>> {
-  const token = supabaseEnabled ? localStorage.getItem('burger_token') : await getSupabaseToken();
+  const token = supabaseEnabled ? await getSupabaseToken() : localStorage.getItem('token');
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
