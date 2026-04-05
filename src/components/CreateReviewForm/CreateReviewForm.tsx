@@ -1,8 +1,9 @@
-import { useState, useRef, type DragEvent, type ChangeEvent } from 'react';
+import { useState } from 'react';
 import { useRestaurants } from '@/hooks/restaurants/useRestaurants';
 import { useSubmitReview } from '@/hooks/reviews/useSubmitReview';
 import { useImageUpload } from '@/hooks/common/useImageUpload';
 import { StarRating } from '@/components/StarRating/StarRating';
+import { ImageUpload } from '@/components/ImageUpload/ImageUpload';
 import type { Restaurant } from '@/types/types';
 import styles from './CreateReviewForm.module.css';
 
@@ -34,35 +35,10 @@ export function CreateReviewForm({ restaurant, onSuccess }: Props) {
     presentation: 7,
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [dragging, setDragging] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
-  const fileRef = useRef<HTMLInputElement>(null);
 
   const set = (key: keyof FormState, value: string | number) =>
     setForm(f => ({ ...f, [key]: value }));
-
-  const handleFile = (file: File) => {
-    if (!file.type.startsWith('image/')) {
-      setValidationError('Please upload an image file.');
-      return;
-    }
-    setImageFile(file);
-    setImagePreview(URL.createObjectURL(file));
-    setValidationError(null);
-  };
-
-  const onDrop = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setDragging(false);
-    const file = e.dataTransfer.files[0];
-    if (file) handleFile(file);
-  };
-
-  const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) handleFile(file);
-  };
 
   const overallScore = +((form.taste + form.texture + form.presentation) / 3).toFixed(1);
 
@@ -184,40 +160,10 @@ export function CreateReviewForm({ restaurant, onSuccess }: Props) {
       </div>
       <div className="form-group">
         <label className="form-label">Photo</label>
-        <div
-          className={`${styles.dropzone} ${dragging ? styles.dropzoneDragging : ''} ${imagePreview ? styles.dropzoneHasImage : ''}`}
-          onDragOver={e => { e.preventDefault(); setDragging(true); }}
-          onDragLeave={() => setDragging(false)}
-          onDrop={onDrop}
-          onClick={() => fileRef.current?.click()}
-          role="button"
-          tabIndex={0}
-          onKeyDown={e => e.key === 'Enter' && fileRef.current?.click()}
-          aria-label="Upload burger photo"
-        >
-          {imagePreview ? (
-            <>
-              <img src={imagePreview} alt="Preview" className={styles.preview} />
-              <div className={styles.previewOverlay}>
-                <span>Change photo</span>
-              </div>
-            </>
-          ) : (
-            <div className={styles.dropzonePrompt}>
-              <span className={styles.dropzoneIcon}>📷</span>
-              <p>Drag & drop or click to upload</p>
-              <p className="text-xs text-muted">JPG, PNG, WebP — max 10 MB</p>
-            </div>
-          )}
-          <input
-            ref={fileRef}
-            type="file"
-            accept="image/*"
-            className={styles.fileInput}
-            onChange={onFileChange}
-            aria-label="Upload image"
-          />
-        </div>
+        <ImageUpload
+          onFileSelect={file => { setImageFile(file); setValidationError(null); }}
+          onError={setValidationError}
+        />
       </div>
       {error && <p className={styles.error}>{error}</p>}
       <button

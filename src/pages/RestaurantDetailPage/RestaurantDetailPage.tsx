@@ -1,5 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { BurgerReviewCard } from '@/components/BurgerReviewCard/BurgerReviewCard';
+import { OpeningHours } from '@/components/OpeningHours/OpeningHours';
+import { RestaurantInfo } from '@/components/RestaurantInfo/RestaurantInfo';
 import { useAuth } from '@/hooks/useAuth';
 import { redirectAfterLogin } from '@/storage/redirectAfterLogin';
 import styles from './RestaurantDetailPage.module.css';
@@ -125,42 +127,16 @@ export function RestaurantDetailPage() {
                 </div>
               </div>
             </div>
-            <div className={styles.sideCard}>
-              <h3 className={styles.sideTitle}>Opening hours</h3>
-              <ul className={styles.hoursList}>
-                {restaurant.openingHours.map((row: { day: string; hours: string }, i: number) => (
-                  <li key={i} className={styles.hoursRow}>
-                    <span className={styles.hoursDay}>{row.day}</span>
-                    <span className={`${styles.hoursTime} ${row.hours === 'Closed' ? 'text-muted' : ''}`}>
-                      {row.hours}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className={styles.sideCard}>
-              <h3 className={styles.sideTitle}>Contact</h3>
-              <p className="text-sm text-muted">{restaurant.phone}</p>
-              <a
-                href={restaurant.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.websiteLink}
-              >
-                {restaurant.website.replace('https://', '')} →
-              </a>
-            </div>
-            <div className={styles.mapContainer}>
-              <iframe
-                title={`Map of ${restaurant.name}`}
-                src={`https://www.openstreetmap.org/export/embed.html?bbox=${restaurant.lng - 0.01},${restaurant.lat - 0.01},${restaurant.lng + 0.01},${restaurant.lat + 0.01}&layer=mapnik&marker=${restaurant.lat},${restaurant.lng}`}
-                className={styles.mapFrame}
-                loading="lazy"
-              />
-              <p className="text-xs text-muted" style={{ marginTop: 6, textAlign: 'center' }}>
-                {restaurant.address}, {restaurant.city}
-              </p>
-            </div>
+            <OpeningHours openingHours={restaurant.openingHours} />
+            <RestaurantInfo
+              phone={restaurant.phone}
+              website={restaurant.website}
+              lat={restaurant.lat}
+              lng={restaurant.lng}
+              address={restaurant.address}
+              city={restaurant.city}
+              name={restaurant.name}
+            />
           </aside>
         </div>
       </div>

@@ -99,16 +99,6 @@
   padding: var(--space-4) var(--space-5);
 }
 
-.sideTitle {
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 600;
-  margin-bottom: var(--space-3);
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
 .scoreRow {
   display: flex;
   align-items: center;
@@ -118,44 +108,6 @@
 .scoreLabel {
   font-weight: 600;
   font-size: 0.9rem;
-}
-
-.hoursList {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.hoursRow {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.875rem;
-}
-
-.hoursDay { color: var(--color-text-muted); }
-.hoursTime { color: var(--color-text); font-weight: 500; }
-
-.websiteLink {
-  font-size: 0.85rem;
-  color: var(--color-amber);
-  margin-top: var(--space-2);
-  display: block;
-  transition: opacity var(--transition-fast);
-}
-.websiteLink:hover { opacity: 0.8; }
-
-/* Map */
-.mapContainer {
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  border: 1px solid var(--color-border);
-}
-
-.mapFrame {
-  display: block;
-  width: 100%;
-  height: 220px;
-  border: none;
 }
 
 /* Responsive */
