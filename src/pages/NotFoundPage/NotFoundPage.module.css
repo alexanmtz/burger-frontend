@@ -8,7 +8,9 @@
   min-height: 60vh;
 }
 
-.icon { font-size: 4rem; }
+.icon {
+  font-size: 4rem;
+}
 
 .code {
   font-family: var(--font-display);

@@ -25,7 +25,9 @@
   flex-shrink: 0;
 }
 
-.logoIcon { font-size: 1.4rem; }
+.logoIcon {
+  font-size: 1.4rem;
+}
 
 .logoText em {
   font-style: normal;
@@ -60,11 +62,19 @@
   transition: transform var(--transition-base);
 }
 
-.navLink:hover { color: var(--color-text); }
-.navLinkActive { color: var(--color-amber) !important; }
-.navLinkActive::after { transform: scaleX(1); }
+.navLink:hover {
+  color: var(--color-text);
+}
+.navLinkActive {
+  color: var(--color-amber) !important;
+}
+.navLinkActive::after {
+  transform: scaleX(1);
+}
 
-.auth { margin-left: auto; }
+.auth {
+  margin-left: auto;
+}
 
 .userMenu {
   display: flex;
@@ -101,7 +111,9 @@
   transition: opacity var(--transition-fast);
 }
 
-.userIdentity:hover { opacity: 0.8; }
+.userIdentity:hover {
+  opacity: 0.8;
+}
 
 .userName {
   font-size: 0.9rem;
@@ -125,12 +137,20 @@
   height: 2px;
   background: var(--color-text);
   border-radius: 1px;
-  transition: transform var(--transition-base), opacity var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    opacity var(--transition-base);
 }
 
-.barOpen1 { transform: translateY(7px) rotate(45deg); }
-.barOpen2 { opacity: 0; }
-.barOpen3 { transform: translateY(-7px) rotate(-45deg); }
+.barOpen1 {
+  transform: translateY(7px) rotate(45deg);
+}
+.barOpen2 {
+  opacity: 0;
+}
+.barOpen3 {
+  transform: translateY(-7px) rotate(-45deg);
+}
 
 .mobileMenu {
   display: flex;
@@ -146,6 +166,11 @@
 }
 
 @media (max-width: 768px) {
-  .links, .auth { display: none; }
-  .hamburger { display: flex; }
+  .links,
+  .auth {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
 }

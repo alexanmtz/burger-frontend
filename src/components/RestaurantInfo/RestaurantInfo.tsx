@@ -16,12 +16,7 @@ export function RestaurantInfo({ phone, website, lat, lng, address, city, name }
       <div className={styles.card}>
         <h3 className={styles.title}>Contact</h3>
         <p className="text-sm text-muted">{phone}</p>
-        <a
-          href={website}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={styles.websiteLink}
-        >
+        <a href={website} target="_blank" rel="noopener noreferrer" className={styles.websiteLink}>
           {website.replace('https://', '')} →
         </a>
       </div>

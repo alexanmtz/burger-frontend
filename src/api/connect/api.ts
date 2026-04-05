@@ -1,12 +1,14 @@
-import { supabase } from '../auth/supabase';
 import mockDb from '../../../db.json';
+import { supabase } from '../auth/supabase';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const supabaseEnabled = import.meta.env.VITE_SUPABASE_ENABLED === 'true';
 const shouldUseMock = import.meta.env.VITE_USE_MOCKS === 'true';
 
 async function getSupabaseToken(): Promise<string> {
-  const { data: { session } } = await supabase.auth.getSession()
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
   return session?.access_token || '';
 }
 
@@ -28,9 +30,7 @@ function mockFetch<T>(path: string): T {
   let results = data as Record<string, unknown>[];
   if (queryPart) {
     const params = Object.fromEntries(new URLSearchParams(queryPart));
-    results = results.filter((r) =>
-      Object.entries(params).every(([k, v]) => String(r[k]) === v)
-    );
+    results = results.filter((r) => Object.entries(params).every(([k, v]) => String(r[k]) === v));
   }
   return results as T;
 }

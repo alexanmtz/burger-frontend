@@ -1,7 +1,8 @@
-import type { Review } from "@/types/types";
-import { CardGrid } from "../CardGrid/CardGrid";
-import { FeedSkeleton } from "./Feed.skeleton";
-import { BurgerReviewCard } from "../BurgerReviewCard/BurgerReviewCard";
+import type { Review } from '@/types/types';
+
+import { BurgerReviewCard } from '../BurgerReviewCard/BurgerReviewCard';
+import { CardGrid } from '../CardGrid/CardGrid';
+import { FeedSkeleton } from './Feed.skeleton';
 
 export const Feed = ({
   reviews,

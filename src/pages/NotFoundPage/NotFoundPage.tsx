@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+
 import styles from './NotFoundPage.module.css';
 
 export function NotFoundPage() {
@@ -13,8 +14,12 @@ export function NotFoundPage() {
             The page you're looking for has vanished — like the last burger at a BBQ.
           </p>
           <div className={styles.actions}>
-            <Link to="/" className="btn btn-primary">Back to the feed</Link>
-            <Link to="/restaurants" className="btn btn-ghost">Browse restaurants</Link>
+            <Link to="/" className="btn btn-primary">
+              Back to the feed
+            </Link>
+            <Link to="/restaurants" className="btn btn-ghost">
+              Browse restaurants
+            </Link>
           </div>
         </div>
       </div>

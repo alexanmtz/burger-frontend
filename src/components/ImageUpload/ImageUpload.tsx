@@ -1,4 +1,5 @@
-import { useState, useRef, type DragEvent, type ChangeEvent } from 'react';
+import { type ChangeEvent, type DragEvent, useRef, useState } from 'react';
+
 import styles from './ImageUpload.module.css';
 
 interface Props {
@@ -35,13 +36,16 @@ export function ImageUpload({ onFileSelect, onError }: Props) {
   return (
     <div
       className={`${styles.dropzone} ${dragging ? styles.dropzoneDragging : ''} ${imagePreview ? styles.dropzoneHasImage : ''}`}
-      onDragOver={e => { e.preventDefault(); setDragging(true); }}
+      onDragOver={(e) => {
+        e.preventDefault();
+        setDragging(true);
+      }}
       onDragLeave={() => setDragging(false)}
       onDrop={onDrop}
       onClick={() => fileRef.current?.click()}
       role="button"
       tabIndex={0}
-      onKeyDown={e => e.key === 'Enter' && fileRef.current?.click()}
+      onKeyDown={(e) => e.key === 'Enter' && fileRef.current?.click()}
       aria-label="Upload burger photo"
     >
       {imagePreview ? (

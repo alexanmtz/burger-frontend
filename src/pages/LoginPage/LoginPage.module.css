@@ -12,9 +12,13 @@
   gap: var(--space-3);
 }
 
-.icon { font-size: 3rem; }
+.icon {
+  font-size: 3rem;
+}
 
-.header h1 { margin-bottom: 0; }
+.header h1 {
+  margin-bottom: 0;
+}
 
 .mockNotice {
   background: var(--color-amber-glow);
@@ -60,4 +64,6 @@
   color: var(--color-amber);
   transition: opacity var(--transition-fast);
 }
-.link:hover { opacity: 0.8; }
+.link:hover {
+  opacity: 0.8;
+}

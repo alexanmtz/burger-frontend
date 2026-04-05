@@ -7,7 +7,9 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: border-color var(--transition-base), background var(--transition-base);
+  transition:
+    border-color var(--transition-base),
+    background var(--transition-base);
   overflow: hidden;
 }
 
@@ -27,7 +29,9 @@
   padding: var(--space-5);
 }
 
-.dropzoneIcon { font-size: 2.5rem; }
+.dropzoneIcon {
+  font-size: 2.5rem;
+}
 
 .preview {
   width: 100%;
@@ -38,7 +42,7 @@
 .previewOverlay {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,6 +51,10 @@
   color: #fff;
   font-weight: 600;
 }
-.dropzone:hover .previewOverlay { opacity: 1; }
+.dropzone:hover .previewOverlay {
+  opacity: 1;
+}
 
-.fileInput { display: none; }
+.fileInput {
+  display: none;
+}

@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
-import { useAuth } from '@/hooks/useAuth';
-import { useUserReviews } from '@/hooks/reviews/useUserReviews';
+
 import { BurgerReviewCard } from '@/components/BurgerReviewCard/BurgerReviewCard';
 import { FeedSkeleton } from '@/components/Feed/Feed.skeleton';
+import { useUserReviews } from '@/hooks/reviews/useUserReviews';
+import { useAuth } from '@/hooks/useAuth';
+
 import styles from './DashboardPage.module.css';
 
 export function DashboardPage() {
@@ -15,14 +17,11 @@ export function DashboardPage() {
     ? (reviews.reduce((sum, r) => sum + r.overallScore, 0) / reviews.length).toFixed(1)
     : null;
 
-
   return (
     <main className="page">
       <div className="container">
         <div className={styles.header}>
-          {user?.avatar && (
-            <img src={user.avatar} alt={userName} className={styles.avatar} />
-          )}
+          {user?.avatar && <img src={user.avatar} alt={userName} className={styles.avatar} />}
           <div>
             <h1 className={styles.greeting}>Welcome back, {userName}!</h1>
             {user?.bio && <p className="text-muted">{user.bio}</p>}
@@ -75,7 +74,7 @@ export function DashboardPage() {
 
         {!isLoading && reviews && reviews.length > 0 && (
           <div className={styles.feed}>
-            {reviews.map(review => (
+            {reviews.map((review) => (
               <BurgerReviewCard key={review.id} review={review} />
             ))}
           </div>

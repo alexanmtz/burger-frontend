@@ -1,10 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { type User } from '../../types/types';
+
 import { fetchUsers } from '@/api/resources/users';
+
+import { type User } from '../../types/types';
 
 export function useUsers() {
   return useQuery<User[]>({
-    queryKey: ['users'],    
+    queryKey: ['users'],
     queryFn: fetchUsers,
   });
 }

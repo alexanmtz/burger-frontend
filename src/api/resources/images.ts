@@ -9,7 +9,7 @@ export interface PresignResponse {
 
 export async function getPresignedUploadUrl(
   filename: string,
-  contentType: string
+  contentType: string,
 ): Promise<PresignResponse> {
   void filename;
   void contentType;
@@ -25,9 +25,15 @@ export async function uploadToS3(uploadUrl: string, file: File): Promise<void> {
   void file;
 }
 
-export async function uploadImage(file: File, filename: string, contentType: string): Promise<string> {
+export async function uploadImage(
+  file: File,
+  filename: string,
+  contentType: string,
+): Promise<string> {
   if (import.meta.env.VITE_USE_SUPABASE === 'true') {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('Must be logged in to upload images');
     const path = `${user.id}/${Date.now()}-${filename}`;
     const { error } = await supabase.storage.from(BUCKET).upload(path, file, { contentType });

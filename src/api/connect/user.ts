@@ -1,4 +1,5 @@
 import type { User } from '@/types/types';
+
 import { fetchUsers } from '../resources/users';
 
 const CURRENT_USER_STORAGE_KEY = 'burger_user';

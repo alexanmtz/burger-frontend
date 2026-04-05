@@ -22,7 +22,9 @@
   display: block;
   transition: opacity var(--transition-fast);
 }
-.websiteLink:hover { opacity: 0.8; }
+.websiteLink:hover {
+  opacity: 0.8;
+}
 
 .mapContainer {
   border-radius: var(--radius-lg);

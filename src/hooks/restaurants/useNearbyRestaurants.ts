@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { getNearbyRestaurants } from '@/api/resources/restaurants';
 
 export function useNearbyRestaurants(lat: number, lng: number, radiusKm = 5) {

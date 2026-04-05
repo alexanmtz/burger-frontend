@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { Feed } from '@/components/Feed/Feed';
 import { FeedControls } from '@/components/FeedControls/FeedControls';
 import { PageTitle } from '@/components/Typography/PageTitle/PageTitle';

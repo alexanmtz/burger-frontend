@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import type { Review } from '@/types/types';
-import { StarRating } from '../StarRating/StarRating';
-import { ScoreBreakdown } from '../ScoreBreakdown/ScoreBreakdown';
-import styles from './BurgerReviewCard.module.css';
-import { useUser } from '@/hooks/users/useUser';
+
 import { useRestaurant } from '@/hooks/restaurants/useRestaurant';
+import { useUser } from '@/hooks/users/useUser';
+import type { Review } from '@/types/types';
 import { formatDate } from '@/utils/time';
+
+import { ScoreBreakdown } from '../ScoreBreakdown/ScoreBreakdown';
+import { StarRating } from '../StarRating/StarRating';
+
+import styles from './BurgerReviewCard.module.css';
 
 interface BurgerReviewCardProps {
   review: Review;
@@ -22,9 +25,7 @@ export function BurgerReviewCard({ review }: BurgerReviewCardProps) {
     <article className={`card ${styles.card} animate-fade-in-up`}>
       <div className={styles.header}>
         <div className={styles.userInfo}>
-          {user && (
-            <img src={user.avatar} alt={user.name} className={styles.avatar} />
-          )}
+          {user && <img src={user.avatar} alt={user.name} className={styles.avatar} />}
           <div>
             <p className={styles.userName}>{user?.name ?? 'Unknown'}</p>
             <p className={styles.meta}>
@@ -57,14 +58,25 @@ export function BurgerReviewCard({ review }: BurgerReviewCardProps) {
       <div className={styles.actions}>
         <button
           className={styles.action}
-          onClick={() => setExpanded(e => !e)}
+          onClick={() => setExpanded((e) => !e)}
           aria-expanded={expanded}
         >
           <svg
-            width="12" height="12" viewBox="0 0 12 12"
-            style={{ transform: expanded ? 'rotate(180deg)' : undefined, transition: 'transform 200ms' }}
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            style={{
+              transform: expanded ? 'rotate(180deg)' : undefined,
+              transition: 'transform 200ms',
+            }}
           >
-            <path d="M2 4l4 4 4-4" stroke="currentColor" fill="none" strokeWidth="1.5" strokeLinecap="round" />
+            <path
+              d="M2 4l4 4 4-4"
+              stroke="currentColor"
+              fill="none"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
           </svg>
           {expanded ? 'Hide' : 'Show'} score breakdown
         </button>

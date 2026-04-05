@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+
 import styles from './CardGrid.module.css';
 
 interface CardGridProps<T extends { id: string }> {
@@ -46,9 +47,7 @@ export function CardGrid<T extends { id: string }>({
         ? Array.from({ length: skeletonCount }, (_, i) => (
             <Fragment key={i}>{renderSkeleton()}</Fragment>
           ))
-        : items!.map(item => (
-            <Fragment key={item.id}>{renderItem(item)}</Fragment>
-          ))}
+        : items!.map((item) => <Fragment key={item.id}>{renderItem(item)}</Fragment>)}
     </div>
   );
 }

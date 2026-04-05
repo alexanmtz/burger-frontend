@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
+
 import type { Restaurant } from '@/types/types';
-import styles from './RestaurantCard.module.css';
 import { isOpenNow } from '@/utils/time';
+
+import styles from './RestaurantCard.module.css';
 
 interface RestaurantCardProps {
   restaurant: Restaurant;
@@ -14,11 +16,7 @@ export function RestaurantCard({ restaurant, distanceKm }: RestaurantCardProps) 
   return (
     <Link to={`/restaurants/${restaurant.id}`} className={`card ${styles.card}`}>
       <div className={styles.imageWrap}>
-        <img
-          src={restaurant.coverImage}
-          alt={restaurant.name}
-          className={styles.image}
-        />
+        <img src={restaurant.coverImage} alt={restaurant.name} className={styles.image} />
         <div className={styles.overlay}>
           <span className={`badge ${open ? 'badge-open' : 'badge-closed'}`}>
             <span className={styles.dot} />

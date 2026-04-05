@@ -1,7 +1,8 @@
-import { apiFetch as api } from '../connect/api';
 import type { Restaurant, Review } from '@/types/types';
-import { getCurrentUser } from '../connect/user';
+
 import { supabase } from '../auth/supabase';
+import { apiFetch as api } from '../connect/api';
+import { getCurrentUser } from '../connect/user';
 
 const useSupabase = import.meta.env.VITE_USE_SUPABASE === 'true';
 
@@ -26,14 +27,14 @@ export function getReviews() {
 export async function getReviewsByRestaurant(restaurantId: string): Promise<Review[]> {
   const reviews = await api<Review[]>(`/reviews?restaurantId=${restaurantId}`);
   return [...reviews].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
   );
 }
 
 export async function getReviewsByUser(userId: string): Promise<Review[]> {
   const reviews = await api<Review[]>(`/reviews?userId=${userId}`);
   return [...reviews].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
   );
 }
 
@@ -42,7 +43,7 @@ export async function getFeed(sort: 'recent' | 'top' = 'recent'): Promise<Review
   return [...reviews].sort((a, b) =>
     sort === 'top'
       ? b.overallScore - a.overallScore
-      : new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      : new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
   );
 }
 
@@ -55,13 +56,16 @@ export interface ReviewPayload {
 }
 
 export async function submitReview(payload: ReviewPayload): Promise<Review> {
-  const user = useSupabase ? await supabase.auth.getSession().then(res => res.data.session?.user) : await getCurrentUser();
-  if(!user) throw new Error('User must be authenticated to submit a review.');
+  const user = useSupabase
+    ? await supabase.auth.getSession().then((res) => res.data.session?.user)
+    : await getCurrentUser();
+  if (!user) throw new Error('User must be authenticated to submit a review.');
   const newReview: Review = {
     id: `rv${Date.now()}`,
     userId: user.id,
     overallScore: +(
-      (payload.scores.taste + payload.scores.texture + payload.scores.presentation) / 3
+      (payload.scores.taste + payload.scores.texture + payload.scores.presentation) /
+      3
     ).toFixed(1),
     createdAt: new Date().toISOString(),
     ...payload,
@@ -80,4 +84,3 @@ export async function submitReview(payload: ReviewPayload): Promise<Review> {
 
   return createdReview;
 }
-

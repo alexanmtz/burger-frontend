@@ -1,8 +1,9 @@
 import { useState } from 'react';
+
 import styles from './StarRating.module.css';
 
 interface StarRatingProps {
-  value: number;        // 0–10
+  value: number; // 0–10
   onChange?: (value: number) => void;
   readonly?: boolean;
   size?: 'sm' | 'md' | 'lg';
@@ -70,9 +71,7 @@ export function StarRating({ value, onChange, readonly = false, size = 'md' }: S
           </button>
         );
       })}
-      {!readonly && (
-        <span className={styles.score}>{hover ?? value}/10</span>
-      )}
+      {!readonly && <span className={styles.score}>{hover ?? value}/10</span>}
     </div>
   );
 }

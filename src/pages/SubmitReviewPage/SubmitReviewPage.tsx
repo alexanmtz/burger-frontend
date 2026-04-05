@@ -1,6 +1,8 @@
-import { useNavigate, useParams, Link } from 'react-router-dom';
-import { useRestaurant } from '@/hooks/restaurants/useRestaurant';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+
 import { CreateReviewForm } from '@/components/CreateReviewForm/CreateReviewForm';
+import { useRestaurant } from '@/hooks/restaurants/useRestaurant';
+
 import styles from './SubmitReviewPage.module.css';
 
 export function SubmitReviewPage() {

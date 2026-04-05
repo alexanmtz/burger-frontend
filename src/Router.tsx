@@ -1,16 +1,17 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from '@/context/AuthContext';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
 import { Navigation } from '@/components/Navigation/Navigation';
 import { ProtectedRoute } from '@/components/ProtectedRoute/ProtectedRoute';
+import { AuthProvider } from '@/context/AuthContext';
 import {
-  HomePage,
   DashboardPage,
-  ReviewsPage,
-  RestaurantsPage,
-  RestaurantDetailPage,
-  SubmitReviewPage,
+  HomePage,
   LoginPage,
   NotFoundPage,
+  RestaurantDetailPage,
+  RestaurantsPage,
+  ReviewsPage,
+  SubmitReviewPage,
 } from '@/pages';
 
 export default function Router() {
@@ -52,5 +53,5 @@ export default function Router() {
         </Routes>
       </AuthProvider>
     </BrowserRouter>
-  )
-};
+  );
+}

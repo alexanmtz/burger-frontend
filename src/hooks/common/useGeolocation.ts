@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 interface GeolocationState {
   lat: number | null;
@@ -17,14 +17,14 @@ export function useGeolocation(): GeolocationState & { request: () => void } {
 
   const request = useCallback(() => {
     if (!navigator.geolocation) {
-      setState(s => ({
+      setState((s) => ({
         ...s,
         error: 'Geolocation is not supported by your browser.',
       }));
       return;
     }
 
-    setState(s => ({ ...s, loading: true, error: null }));
+    setState((s) => ({ ...s, loading: true, error: null }));
 
     navigator.geolocation.getCurrentPosition(
       (pos) => {
@@ -48,7 +48,7 @@ export function useGeolocation(): GeolocationState & { request: () => void } {
           error: messages[err.code] ?? 'An unknown error occurred.',
         });
       },
-      { timeout: 10_000, maximumAge: 60_000, enableHighAccuracy: false }
+      { timeout: 10_000, maximumAge: 60_000, enableHighAccuracy: false },
     );
   }, []);
 

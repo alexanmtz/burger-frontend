@@ -85,7 +85,9 @@
   color: var(--color-amber);
   transition: opacity var(--transition-fast);
 }
-.restaurantLink:hover { opacity: 0.8; }
+.restaurantLink:hover {
+  opacity: 0.8;
+}
 
 /* Image */
 .imageWrap {
@@ -101,14 +103,16 @@
   transition: transform var(--transition-slow);
 }
 
-.card:hover .image { transform: scale(1.03); }
+.card:hover .image {
+  transform: scale(1.03);
+}
 
 .burgerNameOverlay {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(transparent, rgba(0,0,0,0.75));
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.75));
   padding: var(--space-5) var(--space-4) var(--space-3);
   font-family: var(--font-display);
   font-size: 1.1rem;
@@ -130,7 +134,9 @@
   color: var(--color-text);
 }
 
-.starsRow { display: flex; }
+.starsRow {
+  display: flex;
+}
 
 .breakdownToggle {
   background: none;
@@ -144,7 +150,9 @@
   transition: color var(--transition-fast);
   align-self: flex-start;
 }
-.breakdownToggle:hover { color: var(--color-amber); }
+.breakdownToggle:hover {
+  color: var(--color-amber);
+}
 
 .breakdown {
   padding-top: var(--space-2);
@@ -171,4 +179,6 @@
   transition: color var(--transition-fast);
   padding: 0;
 }
-.action:hover { color: var(--color-text); }
+.action:hover {
+  color: var(--color-text);
+}

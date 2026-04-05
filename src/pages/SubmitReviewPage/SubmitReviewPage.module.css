@@ -9,7 +9,9 @@
   transition: color var(--transition-base);
 }
 
-.backLink:hover { color: var(--color-amber); }
+.backLink:hover {
+  color: var(--color-amber);
+}
 
 .wrap {
   max-width: 620px;
@@ -21,7 +23,9 @@
   padding: var(--space-5) 0 var(--space-6);
 }
 
-.titleBlock h1 { margin-bottom: var(--space-1); }
+.titleBlock h1 {
+  margin-bottom: var(--space-1);
+}
 
 .restaurantName {
   font-family: var(--font-display);

@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { useAuth } from '@/hooks/useAuth';
+
 import { Feed } from '@/components/Feed/Feed';
-import { Hero } from '@/components/Hero/Hero';
 import { FeedControls } from '@/components/FeedControls/FeedControls';
+import { Hero } from '@/components/Hero/Hero';
 import { useFeed } from '@/hooks/feed/useFeed';
+import { useAuth } from '@/hooks/useAuth';
 
 type Sort = 'recent' | 'top';
 

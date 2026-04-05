@@ -27,5 +27,10 @@
   font-size: 0.875rem;
 }
 
-.day { color: var(--color-text-muted); }
-.time { color: var(--color-text); font-weight: 500; }
+.day {
+  color: var(--color-text-muted);
+}
+.time {
+  color: var(--color-text);
+  font-weight: 500;
+}

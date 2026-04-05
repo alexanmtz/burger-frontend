@@ -1,13 +1,16 @@
-import { useState, useEffect, type ReactNode } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
+
 import type { User as SupabaseUser } from '@supabase/supabase-js';
-import { login as apiLogin, logout as apiLogout, type LoginPayload } from '@/api/connect/auth';
+
 import { supabase } from '@/api/auth/supabase';
+import { login as apiLogin, type LoginPayload, logout as apiLogout } from '@/api/connect/auth';
 import type { User } from '@/types/types';
+
 import { AuthContext } from './auth';
 
 const USE_SUPABASE = import.meta.env.VITE_USE_SUPABASE === 'true';
 const TOKEN_KEY = 'burger_token';
-const USER_KEY  = 'burger_user';
+const USER_KEY = 'burger_user';
 
 function toAppUser(sbUser: SupabaseUser): User {
   return {
@@ -27,7 +30,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return saved ? (JSON.parse(saved) as User) : null;
   });
   const [token, setToken] = useState<string | null>(() =>
-    USE_SUPABASE ? null : localStorage.getItem(TOKEN_KEY)
+    USE_SUPABASE ? null : localStorage.getItem(TOKEN_KEY),
   );
   const [loading, setLoading] = useState(USE_SUPABASE);
 
@@ -40,7 +43,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(false);
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setToken(session?.access_token ?? null);
       setUser(session?.user ? toAppUser(session.user) : null);
     });

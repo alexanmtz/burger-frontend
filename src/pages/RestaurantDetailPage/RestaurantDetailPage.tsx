@@ -1,13 +1,15 @@
-import { useParams, Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+
 import { BurgerReviewCard } from '@/components/BurgerReviewCard/BurgerReviewCard';
 import { OpeningHours } from '@/components/OpeningHours/OpeningHours';
 import { RestaurantInfo } from '@/components/RestaurantInfo/RestaurantInfo';
-import { useAuth } from '@/hooks/useAuth';
-import { redirectAfterLogin } from '@/storage/redirectAfterLogin';
-import styles from './RestaurantDetailPage.module.css';
-import { isOpenNow } from '@/utils/time';
 import { useRestaurant } from '@/hooks/restaurants/useRestaurant';
 import { useReviews } from '@/hooks/reviews/useReviews';
+import { useAuth } from '@/hooks/useAuth';
+import { redirectAfterLogin } from '@/storage/redirectAfterLogin';
+import { isOpenNow } from '@/utils/time';
+
+import styles from './RestaurantDetailPage.module.css';
 
 export function RestaurantDetailPage() {
   const { id = '' } = useParams<{ id: string }>();
@@ -19,11 +21,7 @@ export function RestaurantDetailPage() {
     error: restaurantError,
   } = useRestaurant(id);
 
-  const {
-    data: reviews,
-    isLoading: reviewsLoading,
-    error: reviewsError,
-  } = useReviews(id);
+  const { data: reviews, isLoading: reviewsLoading, error: reviewsError } = useReviews(id);
 
   if (restaurantLoading) {
     return (
@@ -38,7 +36,9 @@ export function RestaurantDetailPage() {
   if (restaurantError || !restaurant) {
     const notFound = restaurantError?.message.includes('404');
     const message = restaurantError
-      ? (notFound ? 'Restaurant not found.' : 'Failed to load restaurant.')
+      ? notFound
+        ? 'Restaurant not found.'
+        : 'Failed to load restaurant.'
       : 'Restaurant not found.';
 
     return (
@@ -47,7 +47,9 @@ export function RestaurantDetailPage() {
           <div className="empty-state">
             <span className="empty-state-icon">🍔</span>
             <p>{message}</p>
-            <Link to="/restaurants" className="btn btn-ghost">Back to restaurants</Link>
+            <Link to="/restaurants" className="btn btn-ghost">
+              Back to restaurants
+            </Link>
           </div>
         </div>
       </main>
@@ -75,7 +77,9 @@ export function RestaurantDetailPage() {
             <span className="badge badge-amber">{restaurant.priceRange}</span>
           </div>
           <h1 className={styles.coverTitle}>{restaurant.name}</h1>
-          <p className={styles.coverAddress}>{restaurant.address}, {restaurant.city}</p>
+          <p className={styles.coverAddress}>
+            {restaurant.address}, {restaurant.city}
+          </p>
         </div>
       </div>
 
@@ -85,7 +89,11 @@ export function RestaurantDetailPage() {
             <div className={styles.reviewsHeader}>
               <h2>{reviews?.length ?? 0} Reviews</h2>
               {user ? (
-                <Link to={`/restaurants/${id}/review`} className="btn btn-primary" style={{ fontSize: '0.85rem', padding: '8px 16px' }}>
+                <Link
+                  to={`/restaurants/${id}/review`}
+                  className="btn btn-primary"
+                  style={{ fontSize: '0.85rem', padding: '8px 16px' }}
+                >
                   + Write a review
                 </Link>
               ) : (
@@ -111,7 +119,7 @@ export function RestaurantDetailPage() {
             )}
 
             <div className={`${styles.reviewsList} stagger`}>
-              {reviews?.map(r => (
+              {reviews?.map((r) => (
                 <BurgerReviewCard key={r.id} review={r} />
               ))}
             </div>

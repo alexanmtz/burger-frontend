@@ -49,6 +49,10 @@
 }
 
 @media (max-width: 640px) {
-  .searchInput { width: 100%; }
-  .controls { width: 100%; }
+  .searchInput {
+    width: 100%;
+  }
+  .controls {
+    width: 100%;
+  }
 }

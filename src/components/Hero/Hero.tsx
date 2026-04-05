@@ -1,7 +1,10 @@
-import styles from './Hero.module.css';
 import { Link } from 'react-router-dom';
-import heroBurger from '../../assets/hero-burguer.jpg';
+
 import type { User } from '@/types/types';
+
+import heroBurger from '../../assets/hero-burguer.jpg';
+
+import styles from './Hero.module.css';
 
 export const Hero = ({ user }: { user: User | null }) => {
   return (
@@ -11,7 +14,9 @@ export const Hero = ({ user }: { user: User | null }) => {
       </div>
       <div className={styles.heroText}>
         <h1>
-          Discover the world's <br /><em className={styles.heroAccent}>best burgers,</em><br />
+          Discover the world's <br />
+          <em className={styles.heroAccent}>best burgers,</em>
+          <br />
           Tasted by <br /> <em className={styles.heroAccentAlt}>burger lovers</em>
         </h1>
         <p className={styles.heroSub}>
@@ -19,11 +24,17 @@ export const Hero = ({ user }: { user: User | null }) => {
         </p>
         <div className={styles.heroCta}>
           {user ? (
-            <Link to="/submit" className="btn btn-primary">Share a review</Link>
+            <Link to="/submit" className="btn btn-primary">
+              Share a review
+            </Link>
           ) : (
-            <Link to="/login" className="btn btn-primary">Get started</Link>
+            <Link to="/login" className="btn btn-primary">
+              Get started
+            </Link>
           )}
-          <Link to="/restaurants" className="btn btn-ghost">Explore restaurants</Link>
+          <Link to="/restaurants" className="btn btn-ghost">
+            Explore restaurants
+          </Link>
         </div>
       </div>
     </section>

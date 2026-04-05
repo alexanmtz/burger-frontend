@@ -9,8 +9,8 @@ interface ScoreBreakdownProps {
 }
 
 const DIMENSIONS = [
-  { key: 'taste',        label: 'Taste' },
-  { key: 'texture',      label: 'Texture' },
+  { key: 'taste', label: 'Taste' },
+  { key: 'texture', label: 'Texture' },
   { key: 'presentation', label: 'Presentation' },
 ] as const;
 

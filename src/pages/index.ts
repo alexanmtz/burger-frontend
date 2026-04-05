@@ -1,8 +1,8 @@
-export { HomePage } from './HomePage';
 export { DashboardPage } from './DashboardPage';
-export { ReviewsPage } from './ReviewsPage';
-export { RestaurantsPage } from './RestaurantsPage';
-export { RestaurantDetailPage } from './RestaurantDetailPage';
-export { SubmitReviewPage } from './SubmitReviewPage';
+export { HomePage } from './HomePage';
 export { LoginPage } from './LoginPage';
 export { NotFoundPage } from './NotFoundPage';
+export { RestaurantDetailPage } from './RestaurantDetailPage';
+export { RestaurantsPage } from './RestaurantsPage';
+export { ReviewsPage } from './ReviewsPage';
+export { SubmitReviewPage } from './SubmitReviewPage';

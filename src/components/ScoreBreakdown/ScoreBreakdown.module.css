@@ -39,8 +39,12 @@
 }
 
 @keyframes growBar {
-  from { width: 0; }
-  to   { width: var(--bar-width); }
+  from {
+    width: 0;
+  }
+  to {
+    width: var(--bar-width);
+  }
 }
 
 .value {
