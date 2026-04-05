@@ -76,8 +76,8 @@ npm install
 # Start the app (Vite dev server on :5173)
 npm run dev
 
-# Start the mock API (json-server on :4000)
-npx json-server db.json --port 4000
+# Start the mock API (json-server on :3000)
+npx json-server db.json --port 3000
 
 # Build for production
 npm run build
