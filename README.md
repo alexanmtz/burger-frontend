@@ -21,8 +21,8 @@ See `/docs` for C4 Context and Container diagrams.
 
 A demo account is available for testing the authenticated flow:
 
-- Email: demo@burgerfront.io
-- Password: xxxxxxxx
+- Email: demo@burgerlovers.com
+- Password: 1234
 
 ## Local development
 

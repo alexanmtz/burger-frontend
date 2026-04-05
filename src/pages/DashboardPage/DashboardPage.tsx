@@ -9,7 +9,7 @@ export function DashboardPage() {
   const { user } = useAuth();
   const { data: reviews, isLoading, error } = useUserReviews(user?.id);
 
-  const userName = user?.name.split(' ')[0] || 'Foodie';
+  const userName = user?.name || 'Foodie';
 
   const avgScore = reviews?.length
     ? (reviews.reduce((sum, r) => sum + r.overallScore, 0) / reviews.length).toFixed(1)
