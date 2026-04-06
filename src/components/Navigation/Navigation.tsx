@@ -92,10 +92,21 @@ export function Navigation() {
           <NavLink to="/restaurants" className={navLinkClass} onClick={() => setMenuOpen(false)}>
             Restaurants
           </NavLink>
-          {user && (
+          {user ? (
             <button className={`btn btn-ghost ${styles.mobileSignOut}`} onClick={handleSignOut}>
               Sign out
             </button>
+          ) : (
+            <Link
+              to="/login"
+              className="btn btn-primary"
+              onClick={() => {
+                redirectAfterLogin.set(location.pathname);
+                setMenuOpen(false);
+              }}
+            >
+              Sign in
+            </Link>
           )}
         </div>
       )}
