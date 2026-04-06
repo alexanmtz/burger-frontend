@@ -19,17 +19,17 @@ npm run server
 
 ## Architecture
 
-See `/docs` for C4 Context and Container diagrams, STRUCTURE.md and ARCHITECTURE.md.
+See `/docs` for C4 Context and Container diagrams, STRUCTURE.md, and ARCHITECTURE.md.
 
 ## Local development
 
 To run without Supabase auth:
 
 ```
-VITE_USE_MOCK_API=true  # full API, development using json-server
-VITE_USE_MOCK_AUTH=true   # full Supabase OIDC auth flow
+VITE_USE_MOCK_API=true  # Mock API when true, using local db.json read-only mode, when false, development uses a json-server for the api
+VITE_USE_MOCK_AUTH=true   # When true, mock auth to get the user from local db.json file, and false to have the full Supabase OIDC auth flow
 ```
 
 ## Demo
 
-To log with a demo account, switch the `VITE_USE_MOCK_AUTH` environment variable to `true` and log with any credentials.
+To log in with a demo account, switch the `VITE_USE_MOCK_AUTH` environment variable to `true` and log in with any credentials.
