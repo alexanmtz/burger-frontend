@@ -2,11 +2,10 @@ import styles from './LoginPage.module.css';
 
 import { type JSX, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
 import { useAuth } from '@/hooks/useAuth';
 import { redirectAfterLogin } from '@/storage/redirectAfterLogin';
 
-const mockLoginEnabled = import.meta.env.VITE_USE_SUPABASE === 'false';
+const isMockMode = import.meta.env.VITE_USE_MOCK_AUTH === 'true';
 
 export function LoginPage() {
   const { signIn } = useAuth();
@@ -52,7 +51,7 @@ export function LoginPage() {
             <p className="text-muted">Sign in to share your burger reviews.</p>
           </div>
 
-          {mockLoginEnabled && (
+          {isMockMode && (
             <div className={styles.mockNotice}>
               <strong>Demo mode:</strong> any email and password will work.
             </div>

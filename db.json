@@ -26,8 +26,8 @@
       ],
       "phone": "+45 33 12 34 56",
       "website": "https://bunandboard.dk",
-      "averageScore": 7.3,
-      "reviewCount": 3
+      "averageScore": 7.8,
+      "reviewCount": 2
     },
     {
       "id": "r2",
@@ -55,8 +55,8 @@
       ],
       "phone": "+45 35 22 11 44",
       "website": "https://pattycollective.dk",
-      "averageScore": 8.3,
-      "reviewCount": 3
+      "averageScore": 8,
+      "reviewCount": 4
     },
     {
       "id": "r3",
@@ -189,7 +189,7 @@
   ],
   "users": [
     {
-      "id": "db91db93-b84d-48dd-8b5a-cadfa9253e80",
+      "id": "33d9bbad-3fd7-438b-bae6-ece8e03bb29e",
       "name": "Joane Doe",
       "email": "joane.doe@example.com",
       "avatar": "https://i.pravatar.cc/150?img=5",
@@ -224,5 +224,5 @@
       "bio": "Smash burgers changed my life."
     }
   ],
-  "$schema": ["./node_modules/json-server/schema.json"]
+  "$schema": "./node_modules/json-server/schema.json"
 }

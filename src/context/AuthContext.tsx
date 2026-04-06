@@ -1,86 +1,51 @@
 import { type ReactNode, useEffect, useState } from 'react';
 
-import type { User as SupabaseUser } from '@supabase/supabase-js';
-
-import { supabase } from '@/api/auth/supabase';
-import { login as apiLogin, type LoginPayload, logout as apiLogout } from '@/api/connect/auth';
+import { authConnector } from '@/api/auth';
+import type { LoginPayload, SessionUser } from '@/api/auth/types';
 import type { User } from '@/types/types';
 
 import { AuthContext } from './auth';
 
-const USE_SUPABASE = import.meta.env.VITE_USE_SUPABASE === 'true';
-const TOKEN_KEY = 'burger_token';
-const USER_KEY = 'burger_user';
-
-function toAppUser(sbUser: SupabaseUser): User {
+function toAppUser(u: SessionUser): User {
   return {
-    id: sbUser.id,
-    name: sbUser.user_metadata?.name ?? sbUser.email ?? 'Unknown',
-    email: sbUser.email ?? '',
-    avatar: sbUser.user_metadata?.avatar_url ?? '',
-    bio: sbUser.user_metadata?.bio ?? '',
-    reviewCount: 0,
+    id: u.id,
+    name: u.name,
+    email: u.email,
+    avatar: u.avatar,
+    bio: u.bio,
+    reviewCount: u.reviewCount,
   };
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(() => {
-    if (USE_SUPABASE) return null;
-    const saved = localStorage.getItem(USER_KEY);
-    return saved ? (JSON.parse(saved) as User) : null;
-  });
-  const [token, setToken] = useState<string | null>(() =>
-    USE_SUPABASE ? null : localStorage.getItem(TOKEN_KEY),
-  );
-  const [loading, setLoading] = useState(USE_SUPABASE);
+  const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!USE_SUPABASE) return;
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setToken(session?.access_token ?? null);
-      setUser(session?.user ? toAppUser(session.user) : null);
+    authConnector.getInitialSession().then(({ user: u, token: t }) => {
+      setUser(u ? toAppUser(u) : null);
+      setToken(t);
       setLoading(false);
     });
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setToken(session?.access_token ?? null);
-      setUser(session?.user ? toAppUser(session.user) : null);
+    const unsubscribe = authConnector.onSessionChange((u) => {
+      setUser(u ? toAppUser(u) : null);
     });
 
-    return () => subscription.unsubscribe();
+    return unsubscribe;
   }, []);
 
   const signIn = async (payload: LoginPayload) => {
-    if (USE_SUPABASE) {
-      const { error } = await supabase.auth.signInWithPassword({
-        email: payload.email,
-        password: payload.password,
-      });
-      if (error) throw error;
-      // state updated via onAuthStateChange
-    } else {
-      const res = await apiLogin(payload);
-      localStorage.setItem(TOKEN_KEY, res.token);
-      localStorage.setItem(USER_KEY, JSON.stringify(res.user));
-      setToken(res.token);
-      setUser(res.user);
-    }
+    await authConnector.signIn(payload);
+    // Token may have been updated; re-read it after sign in
+    const t = await authConnector.getToken();
+    setToken(t);
   };
 
   const signOut = async () => {
-    if (USE_SUPABASE) {
-      await supabase.auth.signOut();
-      // state cleared via onAuthStateChange
-    } else {
-      await apiLogout();
-      localStorage.removeItem(TOKEN_KEY);
-      localStorage.removeItem(USER_KEY);
-      setToken(null);
-      setUser(null);
-    }
+    await authConnector.signOut();
+    setToken(null);
   };
 
   return (

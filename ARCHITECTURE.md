@@ -107,19 +107,19 @@ Vercel CI picks up commit
 
 **Demo deployment (current)** — fully static, no backend required:
 ```
-VITE_USE_MOCKS=true
+VITE_USE_MOCK_API=true
 ```
 
 **Full deployment** — real auth + storage, backend microservices wired up:
 ```
-VITE_USE_MOCKS=false
-VITE_USE_SUPABASE=true
+VITE_USE_MOCK_API=false
+VITE_USE_MOCK_AUTH=true
 VITE_SUPABASE_URL=<project-url>      # set in Vercel dashboard
 VITE_SUPABASE_ANON_KEY=<anon-key>   # set in Vercel dashboard
 VITE_API_URL=<backend-url>           # set in Vercel dashboard
 ```
 
-> In demo mode (`VITE_USE_MOCKS=true`) `db.json` is bundled into the JS build at compile time. No JSON Server, no Supabase calls, no backend needed — the app runs entirely from the Vercel edge.
+> In demo mode (`VITE_USE_MOCK_API=true`) `db.json` is bundled into the JS build at compile time. No JSON Server, no Supabase calls, no backend needed — the app runs entirely from the Vercel edge.
 
 ---
 
@@ -231,13 +231,13 @@ The API layer is split into three folders:
 **Mock vs. real backend**
 Two env vars combine to control which data sources are active:
 
-| `VITE_USE_MOCKS` | `VITE_USE_SUPABASE` | Auth | Image storage | REST data |
+| `VITE_USE_MOCK_API` | `VITE_USE_MOCK_AUTH` | Auth | Image storage | REST data |
 |---|---|---|---|---|
-| `false` | `true` | Supabase auth (JWT auto-refresh) | `burger-images` Supabase bucket | JSON Server via `/api` proxy |
-| `false` | `false` | Mock JWT (localStorage) | Hardcoded placeholder URL | JSON Server via `/api` proxy |
+| `false` | `false` | Supabase auth (JWT auto-refresh) | `burger-images` Supabase bucket | JSON Server via `/api` proxy |
+| `false` | `true` | Mock JWT (localStorage) | Hardcoded placeholder URL | JSON Server via `/api` proxy |
 | **`true`** | any | Mock JWT (localStorage) | Hardcoded placeholder URL | **`db.json` bundled at build — no network** |
 
-When `VITE_USE_MOCKS=true`, `apiFetch()` in [src/api/connect/api.ts](src/api/connect/api.ts) short-circuits to `mockFetch()`, which resolves queries directly from the statically imported `db.json`. No JSON Server process is needed and the app works fully offline. This mode is used for the Vercel production demo.
+When `VITE_USE_MOCK_API=true`, `apiFetch()` in [src/api/connect/api.ts](src/api/connect/api.ts) short-circuits to `mockFetch()`, which resolves queries directly from the statically imported `db.json`. No JSON Server process is needed and the app works fully offline. This mode is used for the Vercel production demo.
 
 **Auth flow**
 ```
@@ -314,7 +314,7 @@ Each component uses a co-located CSS Module for scoped overrides.
 **Environment variables**
 
 ```
-VITE_USE_SUPABASE=true
+VITE_USE_MOCK_AUTH=true
 VITE_SUPABASE_URL=<your-project-url>
 VITE_SUPABASE_ANON_KEY=<your-anon-key>
 VITE_API_URL=http://localhost:3001   # unused at runtime, proxy handles routing
