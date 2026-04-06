@@ -217,7 +217,8 @@ npm run build
 
 | Variable | Default | Description |
 |---|---|---|
-| `VITE_USE_REAL_API` | `false` | Set to `true` to call the real backend instead of the mock provider |
+| `VITE_USE_MOCK_API` | `false` | Set to `true` to use the mock API instead of the real backend |
+| `VITE_USE_MOCK_AUTH` | `false` | Set to `true` to use the mock auth provider (auto-login as demo user) |
 | `VITE_SUPABASE_URL` | — | Supabase project URL (required when using Supabase provider) |
 | `VITE_SUPABASE_ANON_KEY` | — | Supabase anon key (required when using Supabase provider) |
 

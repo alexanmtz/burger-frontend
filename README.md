@@ -20,8 +20,11 @@ See `/docs` for C4 Context and Container diagrams, STRUCTURE.md and ARCHITECTURE
 ## Local development
 
 To run without Supabase auth:
+
+```
 VITE_USE_MOCK_API=true  # full API, development using json-server
 VITE_USE_MOCK_AUTH=true   # full Supabase OIDC auth flow
+```
 
 ## Demo
 
