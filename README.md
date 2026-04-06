@@ -15,17 +15,14 @@ npm run server
 
 ## Architecture
 
-See `/docs` for C4 Context and Container diagrams.
-
-## Demo
-
-A demo account is available for testing the authenticated flow:
-
-- Email: demo@burgerlovers.com
-- Password: 1234
+See `/docs` for C4 Context and Container diagrams, STRUCTURE.md and ARCHITECTURE.md.
 
 ## Local development
 
 To run without Supabase auth:
-VITE_USE_MOCK_API=false  # full API, development using json-server
-VITE_USE_MOCK_AUTH=false   # full Supabase OIDC auth flow
+VITE_USE_MOCK_API=true  # full API, development using json-server
+VITE_USE_MOCK_AUTH=true   # full Supabase OIDC auth flow
+
+## Demo
+
+To log with a demo account, switch the `VITE_USE_MOCK_AUTH` environment variable to `true` and log with any credentials.
