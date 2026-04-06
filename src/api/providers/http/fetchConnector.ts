@@ -14,7 +14,7 @@ export class RealFetchConnector implements FetchConnector {
       headers: {
         'Content-Type': 'application/json',
         ...authHeader,
-        ...(options.headers as Record<string, string> ?? {}),
+        ...((options.headers as Record<string, string>) ?? {}),
       } as HeadersInit,
     });
     if (!res.ok) throw new Error(`API error: ${res.status} ${res.statusText}`);

@@ -1,9 +1,9 @@
-import type { FetchConnector, StorageConnector } from './types';
+import { authConnector } from '../auth';
+import { RealFetchConnector } from './http/fetchConnector';
 import { MockFetchConnector } from './mock/fetchConnector';
 import { MockStorageConnector } from './mock/storageConnector';
-import { RealFetchConnector } from './http/fetchConnector';
 import { SupabaseStorageConnector } from './supabase/storageConnector';
-import { authConnector } from '../auth';
+import type { FetchConnector, StorageConnector } from './types';
 
 const USE_MOCK_AUTH = import.meta.env.VITE_USE_MOCK_AUTH === 'true';
 const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === 'true';

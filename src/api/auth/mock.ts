@@ -1,5 +1,5 @@
-import type { AuthConnector, LoginPayload, SessionUser } from './types';
 import mockDb from '../../../db.json';
+import type { AuthConnector, LoginPayload, SessionUser } from './types';
 
 const TOKEN_KEY = 'burger_token';
 const USER_KEY = 'burger_user';
@@ -18,7 +18,11 @@ function resolveUser(): SessionUser {
   const stored = getStoredUser();
   if (stored) return stored;
 
-  const raw = (mockDb as unknown as { users: Array<Omit<SessionUser, 'reviewCount'> & { reviewCount?: number }> }).users;
+  const raw = (
+    mockDb as unknown as {
+      users: Array<Omit<SessionUser, 'reviewCount'> & { reviewCount?: number }>;
+    }
+  ).users;
   const first = raw[0];
   if (!first) throw new Error('No users available in mock data');
   return { ...first, reviewCount: first.reviewCount ?? 0 };

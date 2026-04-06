@@ -2,6 +2,7 @@ import styles from './LoginPage.module.css';
 
 import { type JSX, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+
 import { useAuth } from '@/hooks/useAuth';
 import { redirectAfterLogin } from '@/storage/redirectAfterLogin';
 
