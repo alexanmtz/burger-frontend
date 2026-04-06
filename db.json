@@ -185,21 +185,6 @@
       "overallScore": 9.2,
       "comments": 18,
       "createdAt": "2024-03-08T18:05:00Z"
-    },
-    {
-      "id": "SnDN_beozRg",
-      "userId": "33d9bbad-3fd7-438b-bae6-ece8e03bb29e",
-      "overallScore": 8,
-      "createdAt": "2026-04-06T21:04:08.305Z",
-      "restaurantId": "r1",
-      "burgerName": "test",
-      "caption": "test",
-      "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80",
-      "scores": {
-        "taste": 7,
-        "texture": 10,
-        "presentation": 7
-      }
     }
   ],
   "users": [
