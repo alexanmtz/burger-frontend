@@ -19,7 +19,7 @@ npm run server
 
 ## Architecture
 
-See `/docs` for C4 Context and Container diagrams, STRUCTURE.md, and ARCHITECTURE.md.
+See `/diagrams` for C4 Context and Container diagrams, STRUCTURE.md, and ARCHITECTURE.md for more architecture details.
 
 ## Local development
 
