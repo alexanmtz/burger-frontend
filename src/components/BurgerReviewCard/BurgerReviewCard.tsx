@@ -1,6 +1,5 @@
 import styles from './BurgerReviewCard.module.css';
 
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useRestaurant } from '@/hooks/restaurants/useRestaurant';
@@ -16,8 +15,6 @@ interface BurgerReviewCardProps {
 }
 
 export function BurgerReviewCard({ review }: BurgerReviewCardProps) {
-  const [expanded, setExpanded] = useState(false);
-
   const { data: user } = useUser(review.userId);
   const { data: restaurant } = useRestaurant(review.restaurantId);
 
@@ -56,35 +53,9 @@ export function BurgerReviewCard({ review }: BurgerReviewCardProps) {
       </div>
 
       <div className={styles.actions}>
-        <button
-          className={styles.action}
-          onClick={() => setExpanded((e) => !e)}
-          aria-expanded={expanded}
-        >
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 12 12"
-            style={{
-              transform: expanded ? 'rotate(180deg)' : undefined,
-              transition: 'transform 200ms',
-            }}
-          >
-            <path
-              d="M2 4l4 4 4-4"
-              stroke="currentColor"
-              fill="none"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
-          </svg>
-          {expanded ? 'Hide' : 'Show'} score breakdown
-        </button>
-        {expanded && (
-          <div className={styles.breakdown}>
-            <ScoreBreakdown scores={review.scores} />
-          </div>
-        )}
+        <div className={styles.breakdown}>
+          <ScoreBreakdown scores={review.scores} />
+        </div>
       </div>
     </article>
   );

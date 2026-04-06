@@ -1,4 +1,5 @@
 import { QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from 'sonner';
 
 import Router from '@/Router';
 
@@ -8,6 +9,7 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Router />
+      <Toaster position="top-right" richColors />
     </QueryClientProvider>
   );
 }

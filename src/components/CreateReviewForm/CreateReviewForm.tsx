@@ -2,6 +2,8 @@ import styles from './CreateReviewForm.module.css';
 
 import { useState } from 'react';
 
+import { toast } from 'sonner';
+
 import { ImageUpload } from '@/components/ImageUpload/ImageUpload';
 import { StarRating } from '@/components/StarRating/StarRating';
 import { useImageUpload } from '@/hooks/common/useImageUpload';
@@ -93,6 +95,7 @@ export function CreateReviewForm({ restaurant, onSuccess }: Props) {
         },
       });
 
+      toast.success('Review published!');
       onSuccess();
     }
   };

@@ -11,7 +11,11 @@ export function SubmitReviewPage() {
   const { data: restaurant } = useRestaurant(restaurantId ?? '');
 
   const handleSuccess = () => {
-    navigate(restaurantId ? `/restaurants/${restaurantId}` : '/');
+    if(restaurantId) {
+      navigate(`/restaurants/${restaurantId}`);
+      return;
+    }
+    navigate('/dashboard');
   };
 
   return (
