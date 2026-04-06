@@ -1,5 +1,6 @@
-import mockDb from '../../../../db.json';
 import type { FetchConnector } from '@/api/providers/types';
+
+import mockDb from '../../../../db.json';
 
 export class MockFetchConnector implements FetchConnector {
   fetch<T>(path: string): Promise<T> {

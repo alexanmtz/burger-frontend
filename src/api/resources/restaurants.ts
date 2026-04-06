@@ -1,6 +1,5 @@
-import type { Restaurant } from '@/types/types';
-
 import { apiFetch as api } from '@/api/connect/api';
+import type { Restaurant } from '@/types/types';
 
 export function getRestaurants() {
   return api<Restaurant[]>('/restaurants');

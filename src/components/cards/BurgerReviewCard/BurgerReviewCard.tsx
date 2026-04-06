@@ -2,13 +2,12 @@ import styles from './BurgerReviewCard.module.css';
 
 import { Link } from 'react-router-dom';
 
+import { ScoreBreakdown } from '@/components/score/ScoreBreakdown/ScoreBreakdown';
+import { StarRating } from '@/components/score/StarRating/StarRating';
 import { useRestaurant } from '@/hooks/restaurants/useRestaurant';
 import { useUser } from '@/hooks/users/useUser';
 import type { Review } from '@/types/types';
 import { formatDate } from '@/utils/time';
-
-import { ScoreBreakdown } from '@/components/score/ScoreBreakdown/ScoreBreakdown';
-import { StarRating } from '@/components/score/StarRating/StarRating';
 
 interface BurgerReviewCardProps {
   review: Review;

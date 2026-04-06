@@ -1,4 +1,5 @@
 import { supabase } from '@/api/providers/supabase/client';
+
 import type { AuthConnector, LoginPayload, SessionUser } from './types';
 
 function toSessionUser(sbUser: {

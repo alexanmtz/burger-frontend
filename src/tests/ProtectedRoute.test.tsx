@@ -2,10 +2,9 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
 import { render, screen } from '@testing-library/react';
 
-import type { User } from '@/types/types';
-
 import { ProtectedRoute } from '@/components/navigation/ProtectedRoute/ProtectedRoute';
 import { AuthContext } from '@/context/auth';
+import type { User } from '@/types/types';
 
 type ValueProps = {
   user: User | null;
