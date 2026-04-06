@@ -17,15 +17,6 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
     },
   },
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3001',
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      }
-    }
-
-  },
   build: {
     rollupOptions: {
       output: {
