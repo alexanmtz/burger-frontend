@@ -1,4 +1,4 @@
-import type { StorageConnector } from '../types';
+import type { StorageConnector } from '@/api/providers/types';
 import { supabase } from './client';
 
 const BUCKET = 'burger-images';

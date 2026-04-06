@@ -1,4 +1,4 @@
-export type { AuthConnector, LoginPayload, SessionUser } from '../auth/types';
+export type { AuthConnector, LoginPayload, SessionUser } from '@/api/auth/types';
 
 export interface StorageConnector {
   uploadImage(file: File, filename: string, contentType: string): Promise<string>;

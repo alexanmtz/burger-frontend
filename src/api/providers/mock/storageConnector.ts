@@ -1,4 +1,4 @@
-import type { StorageConnector } from '../types';
+import type { StorageConnector } from '@/api/providers/types';
 
 const STUB_IMAGE_URL = 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80';
 

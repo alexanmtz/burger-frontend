@@ -1,5 +1,5 @@
-import type { AuthConnector } from '../../auth/types';
-import type { FetchConnector } from '../types';
+import type { AuthConnector } from '@/api/auth/types';
+import type { FetchConnector } from '@/api/providers/types';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 

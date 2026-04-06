@@ -1,7 +1,7 @@
 import type { Restaurant, Review } from '@/types/types';
 
-import { authConnector } from '../auth';
-import { apiFetch as api } from '../connect/api';
+import { authConnector } from '@/api/auth';
+import { apiFetch as api } from '@/api/connect/api';
 
 async function updateRestaurantStats(restaurantId: string): Promise<void> {
   const reviews = await api<Review[]>(`/reviews?restaurantId=${restaurantId}`);
