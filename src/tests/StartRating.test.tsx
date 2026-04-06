@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 
-import { StarRating } from '../components/StarRating/StarRating';
+import { StarRating } from '@/components/score/StarRating/StarRating';
 
 describe('StarRating', () => {
   it('renders correct number of stars', () => {

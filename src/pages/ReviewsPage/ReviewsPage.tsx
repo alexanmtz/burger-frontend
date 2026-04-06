@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import { Feed } from '@/components/Feed/Feed';
-import { FeedControls } from '@/components/FeedControls/FeedControls';
-import { PageTitle } from '@/components/Typography/PageTitle/PageTitle';
+import { Feed } from '@/components/sections/Feed/Feed';
+import { FeedControls } from '@/components/sections/FeedControls/FeedControls';
+import { PageTitle } from '@/components/typography/Typography/PageTitle/PageTitle';
 import { useFeed } from '@/hooks/feed/useFeed';
 
 type Sort = 'recent' | 'top';

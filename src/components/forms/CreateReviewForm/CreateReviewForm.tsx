@@ -4,8 +4,8 @@ import { useState } from 'react';
 
 import { toast } from 'sonner';
 
-import { ImageUpload } from '@/components/ImageUpload/ImageUpload';
-import { StarRating } from '@/components/StarRating/StarRating';
+import { ImageUpload } from '@/components/forms/ImageUpload/ImageUpload';
+import { StarRating } from '@/components/score/StarRating/StarRating';
 import { useImageUpload } from '@/hooks/common/useImageUpload';
 import { useRestaurants } from '@/hooks/restaurants/useRestaurants';
 import { useSubmitReview } from '@/hooks/reviews/useSubmitReview';

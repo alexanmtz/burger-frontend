@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { Navigation } from '@/components/Navigation/Navigation';
-import { ProtectedRoute } from '@/components/ProtectedRoute/ProtectedRoute';
+import { Navigation } from '@/components/navigation/Navigation/Navigation';
+import { ProtectedRoute } from '@/components/navigation/ProtectedRoute/ProtectedRoute';
 import { AuthProvider } from '@/context/AuthContext';
 import {
   DashboardPage,

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import type { User } from '@/types/types';
 
-import heroBurger from '../../assets/hero-burguer.jpg';
+import heroBurger from '@/assets/hero-burguer.jpg';
 
 export const Hero = ({ user }: { user: User | null }) => {
   return (

@@ -7,8 +7,8 @@ import { useUser } from '@/hooks/users/useUser';
 import type { Review } from '@/types/types';
 import { formatDate } from '@/utils/time';
 
-import { ScoreBreakdown } from '../ScoreBreakdown/ScoreBreakdown';
-import { StarRating } from '../StarRating/StarRating';
+import { ScoreBreakdown } from '@/components/score/ScoreBreakdown/ScoreBreakdown';
+import { StarRating } from '@/components/score/StarRating/StarRating';
 
 interface BurgerReviewCardProps {
   review: Review;

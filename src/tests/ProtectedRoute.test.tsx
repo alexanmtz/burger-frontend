@@ -4,8 +4,8 @@ import { render, screen } from '@testing-library/react';
 
 import type { User } from '@/types/types';
 
-import { ProtectedRoute } from '../components/ProtectedRoute/ProtectedRoute';
-import { AuthContext } from '../context/auth';
+import { ProtectedRoute } from '@/components/navigation/ProtectedRoute/ProtectedRoute';
+import { AuthContext } from '@/context/auth';
 
 type ValueProps = {
   user: User | null;

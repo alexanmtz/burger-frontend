@@ -2,8 +2,8 @@ import styles from './DashboardPage.module.css';
 
 import { Link } from 'react-router-dom';
 
-import { BurgerReviewCard } from '@/components/BurgerReviewCard/BurgerReviewCard';
-import { FeedSkeleton } from '@/components/Feed/Feed.skeleton';
+import { BurgerReviewCard } from '@/components/cards/BurgerReviewCard/BurgerReviewCard';
+import { FeedSkeleton } from '@/components/sections/Feed/Feed.skeleton';
 import { useAuth } from '@/hooks/auth/useAuth';
 import { useUserReviews } from '@/hooks/reviews/useUserReviews';
 

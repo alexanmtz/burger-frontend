@@ -2,7 +2,7 @@ import styles from './SubmitReviewPage.module.css';
 
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
-import { CreateReviewForm } from '@/components/CreateReviewForm/CreateReviewForm';
+import { CreateReviewForm } from '@/components/forms/CreateReviewForm/CreateReviewForm';
 import { useRestaurant } from '@/hooks/restaurants/useRestaurant';
 
 export function SubmitReviewPage() {

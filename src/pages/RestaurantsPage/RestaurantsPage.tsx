@@ -2,10 +2,10 @@ import styles from './RestaurantsPage.module.css';
 
 import { useState } from 'react';
 
-import { CardGrid } from '@/components/CardGrid/CardGrid';
-import { RestaurantCard } from '@/components/RestaurantCard/RestaurantCard';
-import { RestaurantCardSkeleton } from '@/components/RestaurantCard/RestaurantCard.skeleton';
-import { PageTitle } from '@/components/Typography/PageTitle/PageTitle';
+import { RestaurantCard } from '@/components/cards/RestaurantCard/RestaurantCard';
+import { RestaurantCardSkeleton } from '@/components/cards/RestaurantCard/RestaurantCard.skeleton';
+import { CardGrid } from '@/components/layout/CardGrid/CardGrid';
+import { PageTitle } from '@/components/typography/Typography/PageTitle/PageTitle';
 import { useGeolocation } from '@/hooks/common/useGeolocation';
 import { useNearbyRestaurants } from '@/hooks/restaurants/useNearbyRestaurants';
 import { useRestaurants } from '@/hooks/restaurants/useRestaurants';
