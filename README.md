@@ -4,14 +4,18 @@ Social platform for burger fanatics to review local burger places.
 
 ## Setup
 
+```
 cp .env.example .env.local
 npm install
 npm run dev
+```
 
 ## Local API
 
+```
 npm install -D json-server
 npm run server
+```
 
 ## Architecture
 

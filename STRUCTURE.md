@@ -190,7 +190,7 @@ burger-frontend/
 | `/restaurants` | `RestaurantsPage` | No |
 | `/restaurants/:id` | `RestaurantDetailPage` | No |
 | `/restaurants/:id/review` | `SubmitReviewPage` | **Yes** |
-| `/submit` | `SubmitReviewPage` | **Yes** (legacy alias) |
+| `/submit` | `SubmitReviewPage` | **Yes** |
 | `/login` | `LoginPage` | No |
 | `*` | `NotFoundPage` | No |
 
