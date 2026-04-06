@@ -370,18 +370,6 @@ VITE_SUPABASE_ANON_KEY=<your-anon-key>
 VITE_API_URL=http://localhost:3001   # unused at runtime, proxy handles routing
 ```
 
-**Vite proxy**
-
-```ts
-// vite.config.ts
-proxy: {
-  '/api': {
-    target: 'http://localhost:3001',
-    rewrite: (path) => path.replace(/^\/api/, ''),
-  },
-}
-```
-
 ---
 
 ## Testing
