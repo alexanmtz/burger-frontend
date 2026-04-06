@@ -92,7 +92,7 @@ Vercel CI picks up commit
         └── dist/ uploaded to Vercel edge network
                 │
                 ▼
-        https://burger-frontend.vercel.app   (production)
+        https://burger-frontend-hazel.vercel.app/   (production)
         https://<branch>-burger-frontend.vercel.app  (preview)
 ```
 

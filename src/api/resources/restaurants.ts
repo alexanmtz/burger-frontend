@@ -26,7 +26,7 @@ export async function searchRestaurants(query: string): Promise<Restaurant[]> {
 export async function getNearbyRestaurants(
   lat: number,
   lng: number,
-  radiusKm = 5,
+  radiusKm = 25,
 ): Promise<Restaurant[]> {
   const restaurants = await getRestaurants();
   const filtered = restaurants.filter((r) => {
