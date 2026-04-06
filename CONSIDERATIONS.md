@@ -4,8 +4,6 @@
   - In production mode, authentication is delegated to Supabase, which manages JWT issuance and session auto-refresh via its JS client (`onAuthStateChange` listener). The frontend never handles raw tokens directly.
   - Image files travel directly from the browser to Supabase Storage via `supabase.storage.upload()`. The REST API only receives the resulting public URL — the file itself never passes through the backend.
   - `ProtectedRoute` gates all write-capable pages and stores the intended destination in `sessionStorage` (not `localStorage`) before redirecting to `/login`, so users are returned to their original path after sign-in.
-  - Known trade-off: mock/demo mode uses a fake token string in `localStorage`, which is XSS-vulnerable. This is an accepted dev/demo shortcut, not a production path — Supabase auth replaces it entirely in production.
-
 
 - [x] How would the system scale with increased workloads and do you have any bottlenecks?
 
