@@ -4,7 +4,6 @@ export interface SessionUser {
   email: string;
   avatar: string;
   bio: string;
-  reviewCount: number;
 }
 
 export interface LoginPayload {

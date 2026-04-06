@@ -4,7 +4,7 @@ import { Feed } from '@/components/Feed/Feed';
 import { FeedControls } from '@/components/FeedControls/FeedControls';
 import { Hero } from '@/components/Hero/Hero';
 import { useFeed } from '@/hooks/feed/useFeed';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/auth/useAuth';
 
 type Sort = 'recent' | 'top';
 

@@ -4,9 +4,10 @@ import { fetchUser } from '@/api/resources/users';
 
 import { type User } from '../../types/types';
 
-export function useUser(id: string) {
+export function useUser(id: string | undefined) {
   return useQuery<User>({
     queryKey: ['users', id],
-    queryFn: () => fetchUser(id),
+    queryFn: () => fetchUser(id!),
+    enabled: !!id,
   });
 }

@@ -3,7 +3,7 @@ import styles from './Navigation.module.css';
 import { useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/auth/useAuth';
 import { redirectAfterLogin } from '@/storage/redirectAfterLogin';
 
 export function Navigation() {

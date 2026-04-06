@@ -18,14 +18,10 @@ function resolveUser(): SessionUser {
   const stored = getStoredUser();
   if (stored) return stored;
 
-  const raw = (
-    mockDb as unknown as {
-      users: Array<Omit<SessionUser, 'reviewCount'> & { reviewCount?: number }>;
-    }
-  ).users;
+  const raw = mockDb.users;
   const first = raw[0];
   if (!first) throw new Error('No users available in mock data');
-  return { ...first, reviewCount: first.reviewCount ?? 0 };
+  return first as SessionUser;
 }
 
 export class MockAuthConnector implements AuthConnector {

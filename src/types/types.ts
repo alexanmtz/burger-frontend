@@ -4,7 +4,6 @@ export interface User {
   email: string;
   avatar: string;
   bio: string;
-  reviewCount: number;
 }
 
 export interface Restaurant {

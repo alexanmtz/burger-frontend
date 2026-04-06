@@ -3,7 +3,7 @@ import styles from './LoginPage.module.css';
 import { type JSX, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/auth/useAuth';
 import { redirectAfterLogin } from '@/storage/redirectAfterLogin';
 
 const isMockMode = import.meta.env.VITE_USE_MOCK_AUTH === 'true';

@@ -5,11 +5,13 @@ import { Link } from 'react-router-dom';
 import { BurgerReviewCard } from '@/components/BurgerReviewCard/BurgerReviewCard';
 import { FeedSkeleton } from '@/components/Feed/Feed.skeleton';
 import { useUserReviews } from '@/hooks/reviews/useUserReviews';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/auth/useAuth';
 
 export function DashboardPage() {
   const { user } = useAuth();
   const { data: reviews, isLoading, error } = useUserReviews(user?.id);
+
+  console.log('User:', user);
 
   const userName = user?.name || 'Foodie';
 
