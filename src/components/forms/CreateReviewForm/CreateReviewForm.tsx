@@ -50,7 +50,7 @@ export function CreateReviewForm({ restaurant, onSuccess }: Props) {
 
   const overallScore = +((form.taste + form.texture + form.presentation) / 3).toFixed(1);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!form.restaurantId && !restaurant?.id) {
       setValidationError('Please select a restaurant.');
@@ -67,7 +67,7 @@ export function CreateReviewForm({ restaurant, onSuccess }: Props) {
 
     setValidationError(null);
 
-    let imageUrl = 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80';
+    let imageUrl: string | undefined;
 
     if (imageFile) {
       const publicUrl = await imageUpload.mutateAsync({
@@ -78,6 +78,7 @@ export function CreateReviewForm({ restaurant, onSuccess }: Props) {
       imageUrl = publicUrl;
     }
     if (
+      imageUrl &&
       !validationError &&
       !imageUpload.error &&
       !submitReview.error &&
