@@ -43,13 +43,14 @@
 │  │  TanStack React Query v5        │       │                               │    │
 │  │  CSS Modules + CSS vars         │       │  Storage bucket: burger-images│    │
 │  │  TypeScript                     │       │  (direct upload from browser) │    │
-│  │                                 │       └───────────────────────────────┘    │
-│  │  Deployed to: Vercel            │                                             │
-│  │  ─ static build (vite build)    │       ┌───────────────────────────────┐    │
-│  │  ─ served from Vercel edge      │ ────► │  Burger Backend APIs          │    │
-│  │  ─ automatic HTTPS + CDN        │       │  (microservices, future)      │    │
-│  │  ─ preview deploys per PR       │       │  Proxied via /api in dev      │    │
-│  └─────────────────────────────────┘       └───────────────────────────────┘    │
+│  │  Sonner (toast notifications)   │       └───────────────────────────────┘    │
+│  │                                 │                                             │
+│  │  Deployed to: Vercel            │       ┌───────────────────────────────┐    │
+│  │  ─ static build (vite build)    │ ────► │  Burger Backend APIs          │    │
+│  │  ─ served from Vercel edge      │       │  (microservices, future)      │    │
+│  │  ─ automatic HTTPS + CDN        │       │  Proxied via /api in dev      │    │
+│  │  ─ preview deploys per PR       │       └───────────────────────────────┘    │
+│  └─────────────────────────────────┘                                             │
 │                                                                                  │
 │  ┌─────────────────────────────────┐                                             │
 │  │  JSON Server (dev only)         │                                             │
@@ -113,7 +114,7 @@ VITE_USE_MOCK_API=true
 **Full deployment** — real auth + storage, backend microservices wired up:
 ```
 VITE_USE_MOCK_API=false
-VITE_USE_MOCK_AUTH=true
+VITE_USE_MOCK_AUTH=false
 VITE_SUPABASE_URL=<project-url>      # set in Vercel dashboard
 VITE_SUPABASE_ANON_KEY=<anon-key>   # set in Vercel dashboard
 VITE_API_URL=<backend-url>           # set in Vercel dashboard
@@ -134,6 +135,7 @@ VITE_API_URL=<backend-url>           # set in Vercel dashboard
 | Routing | React Router DOM | ^7.14.0 |
 | Server state | TanStack React Query | ^5.96.2 |
 | Auth + Storage | Supabase JS | ^2.101.1 |
+| Toast notifications | Sonner | ^2.0.7 |
 | Styling | CSS Modules + CSS custom properties | — |
 | Language | TypeScript | ~5.9.3 |
 | Testing | Vitest + Testing Library | ^4.1.2 / ^16.3.2 |
@@ -145,39 +147,61 @@ VITE_API_URL=<backend-url>           # set in Vercel dashboard
 src/
 ├── api/
 │   ├── auth/
-│   │   └── supabase.ts          # Supabase client (session persist, auto-refresh)
+│   │   ├── index.ts             # Factory — exports mock or Supabase connector
+│   │   ├── types.ts             # AuthConnector interface, LoginPayload, SessionUser
+│   │   ├── mock.ts              # Mock auth (localStorage JWT)
+│   │   └── supabase.ts         # Supabase auth implementation
 │   ├── client/
-│   │   └── queryClient.ts       # React Query client config
+│   │   └── queryClient.ts       # React Query config (staleTime 2 min, 1 retry)
 │   ├── connect/
-│   │   ├── api.ts               # Base apiFetch() — reads JWT, adds auth header
-│   │   ├── auth.ts              # Mock sign-in/sign-out endpoints
-│   │   └── user.ts              # Current user from localStorage / JSON Server
+│   │   └── api.ts               # apiFetch<T>() — entry point, delegates to provider
+│   └── providers/               # Pluggable connector infrastructure
+│       ├── index.ts             # Selects mock/http/supabase based on env vars
+│       ├── types.ts             # FetchConnector & StorageConnector interfaces
+│       ├── http/
+│       │   └── fetchConnector.ts # HTTP fetch with Bearer token injection
+│       ├── mock/
+│       │   ├── fetchConnector.ts # Resolves queries from bundled db.json
+│       │   └── storageConnector.ts # Returns placeholder image URL
+│       └── supabase/
+│           ├── client.ts         # Supabase client singleton
+│           └── storageConnector.ts # Direct browser → Supabase Storage upload
 │   └── resources/
-│       ├── images.ts            # Image upload (Supabase Storage real, S3 mocked)
+│       ├── images.ts            # uploadImage() wrapper over StorageConnector
 │       ├── restaurants.ts       # getRestaurants, getRestaurant, search, nearby
 │       ├── reviews.ts           # CRUD reviews, feed, stats update
 │       └── users.ts             # fetchUser(s)
+├── assets/
+│   └── hero-burguer.jpg
 ├── components/
-│   ├── BurgerReviewCard/        # Review card (fetches user + restaurant)
-│   ├── CardGrid/                # Generic grid with loading/empty states
-│   ├── CreateReviewForm/        # Review form with image upload integration
-│   ├── Feed/                    # Review list (wraps CardGrid)
-│   ├── FeedControls/            # Sort toggle (recent | top)
-│   ├── Hero/                    # Homepage banner
-│   ├── ImageUpload/             # Drag-drop image picker with preview
-│   ├── Navigation/              # Top nav, auth status, mobile menu
-│   ├── OpeningHours/            # Hours display
-│   ├── ProtectedRoute/          # Auth guard — redirects to /login
-│   ├── RestaurantCard/          # Restaurant preview with distance
-│   ├── RestaurantInfo/          # Contact / location links
-│   ├── ScoreBreakdown/          # Taste / texture / presentation scores
-│   ├── StarRating/              # Interactive 1–5 star (maps to 0–10 scale)
-│   └── Typography/PageTitle/    # Page heading with optional subtitle + controls
+│   ├── cards/
+│   │   ├── BurgerReviewCard/    # Review card (image, scores, user + restaurant)
+│   │   ├── RestaurantCard/      # Restaurant preview with skeleton loader
+│   │   ├── RestaurantInfo/      # Contact / location links
+│   │   └── OpeningHours/        # Per-day hours display
+│   ├── forms/
+│   │   ├── CreateReviewForm/    # Review form (burger name, caption, scores, image)
+│   │   └── ImageUpload/         # Drag-drop image picker with preview
+│   ├── layout/
+│   │   ├── CardGrid/            # Generic grid with loading/empty states
+│   │   └── Hero/                # Homepage banner with user greeting
+│   ├── navigation/
+│   │   ├── Navigation/          # Top nav, auth status, responsive hamburger menu
+│   │   └── ProtectedRoute/      # Auth guard — redirects to /login
+│   ├── score/
+│   │   ├── StarRating/          # Interactive 1–5 star (maps to 0–10 scale)
+│   │   └── ScoreBreakdown/      # Taste / texture / presentation scores
+│   ├── sections/
+│   │   ├── Feed/                # Review list (wraps CardGrid)
+│   │   └── FeedControls/        # Sort toggle (recent | top)
+│   └── typography/
+│       └── Typography/PageTitle/ # Page heading with optional subtitle + controls
 ├── context/
-│   ├── AuthContext.tsx          # AuthProvider + useAuth hook
-│   └── auth.ts                  # AuthContextValue type
+│   ├── auth.ts                  # AuthContextValue type + AuthContext instance
+│   └── AuthContext.tsx          # AuthProvider + session listener
 ├── hooks/
-│   ├── useAuth.ts
+│   ├── auth/
+│   │   └── useAuth.ts           # Reads AuthContextValue from context
 │   ├── common/
 │   │   ├── useGeolocation.ts    # Browser Geolocation API with permission state
 │   │   └── useImageUpload.ts    # React Query mutation wrapping images.ts
@@ -203,18 +227,21 @@ src/
 │   ├── RestaurantsPage/         # Searchable list + geolocation sort
 │   ├── ReviewsPage/             # Full review feed
 │   ├── SubmitReviewPage/        # Review creation (protected)
-│   └── NotFoundPage/            # 404
+│   ├── NotFoundPage/            # 404
+│   └── index.ts                 # Re-exports all pages
 ├── storage/
 │   └── redirectAfterLogin.ts   # sessionStorage helper for post-login nav
 ├── tests/
 │   ├── setup.ts                 # Vitest setup — imports jest-dom matchers
-│   ├── StarRating.test.tsx
-│   └── ProtectedRoute.test.tsx
+│   ├── isOpenNow.test.ts        # Opening hours logic (day ranges, parsing, closed)
+│   ├── StarRating.test.tsx      # Component rendering and interaction
+│   └── ProtectedRoute.test.tsx  # Auth guard redirect behaviour
 ├── types/
 │   └── types.ts                 # Domain types: User, Restaurant, Review
 ├── utils/
-│   └── time.ts                  # formatDate(), isOpenNow()
-├── App.tsx                      # Root — wraps tree in QueryClientProvider
+│   └── time.ts                  # formatDate(), isOpenNow() (parses stored hours)
+├── App.tsx                      # Root — wraps tree in QueryClientProvider + Toaster
+├── App.css                      # App-level styles
 ├── Router.tsx                   # BrowserRouter, AuthProvider, all routes
 ├── index.css                    # Global CSS variables + utility classes
 └── main.tsx                     # Entry point
@@ -223,23 +250,31 @@ src/
 ### Key Patterns
 
 **API Layer (`src/api/`)**
-The API layer is split into three folders:
-- `connect/` — HTTP plumbing. `apiFetch()` reads the JWT from `localStorage` (`burger_token`), injects `Authorization: Bearer` and delegates to `fetch`. The Vite dev proxy rewrites `/api/*` → `http://localhost:3001/*` (JSON Server).
+
+The API layer uses a **pluggable connector architecture** split into four concerns:
+
+- `providers/` — Defines `FetchConnector` and `StorageConnector` interfaces. `providers/index.ts` selects the active implementation based on env vars and exports a single connector pair used by the rest of the app.
+  - `mock/` — Resolves all requests from statically bundled `db.json`; storage returns a placeholder URL.
+  - `http/` — Real HTTP fetch with `Authorization: Bearer` header injection from `localStorage`.
+  - `supabase/` — Supabase Storage implementation for image uploads.
+- `connect/api.ts` — `apiFetch<T>(path, options)` delegates to the active `FetchConnector`.
 - `resources/` — Domain functions (`getRestaurants`, `submitReview`, etc.) built on `apiFetch`.
-- `auth/` — Supabase client singleton (session persistence + token auto-refresh).
+- `auth/` — Factory pattern: `auth/index.ts` exports either `mock.ts` or `supabase.ts` based on `VITE_USE_MOCK_AUTH`.
 
 **Mock vs. real backend**
-Two env vars combine to control which data sources are active:
+
+Three env vars combine to control which data sources are active:
 
 | `VITE_USE_MOCK_API` | `VITE_USE_MOCK_AUTH` | Auth | Image storage | REST data |
 |---|---|---|---|---|
-| `false` | `false` | Supabase auth (JWT auto-refresh) | `burger-images` Supabase bucket | JSON Server via `/api` proxy |
-| `false` | `true` | Mock JWT (localStorage) | Hardcoded placeholder URL | JSON Server via `/api` proxy |
-| **`true`** | any | Mock JWT (localStorage) | Hardcoded placeholder URL | **`db.json` bundled at build — no network** |
+| `false` | `false` | Supabase auth (JWT auto-refresh) | Supabase `burger-images` bucket | JSON Server via `/api` proxy |
+| `false` | `true` | Mock JWT (localStorage) | Placeholder URL | JSON Server via `/api` proxy |
+| **`true`** | any | Mock JWT (localStorage) | Placeholder URL | **`db.json` bundled at build — no network** |
 
-When `VITE_USE_MOCK_API=true`, `apiFetch()` in [src/api/connect/api.ts](src/api/connect/api.ts) short-circuits to `mockFetch()`, which resolves queries directly from the statically imported `db.json`. No JSON Server process is needed and the app works fully offline. This mode is used for the Vercel production demo.
+When `VITE_USE_MOCK_API=true`, `apiFetch()` short-circuits to the mock `FetchConnector`, which resolves queries directly from the statically imported `db.json`. No JSON Server process is needed and the app works fully offline. This mode is used for the Vercel production demo.
 
 **Auth flow**
+
 ```
 Supabase mode                     Mock mode
 ─────────────────────────────     ──────────────────────────────────
@@ -249,9 +284,11 @@ signIn(email, pw)                 POST /api/auth/login
   → onAuthStateChange listener         (burger_token, burger_user)
   → maps Supabase user → User type
 ```
-`ProtectedRoute` checks `AuthContext`. If unauthenticated, stores the intended path in `sessionStorage` and redirects to `/login`. After sign-in the user is sent back to that path.
+
+`AuthProvider` subscribes to `authConnector.onSessionChange` to keep `user` + `token` in sync. `ProtectedRoute` reads `AuthContext`; if unauthenticated it stores the intended path in `sessionStorage` and redirects to `/login`. After sign-in the user is sent back to that path.
 
 **Image upload flow (Supabase Storage)**
+
 ```
 Browser                         Supabase Storage
   │                                     │
@@ -261,40 +298,51 @@ Browser                         Supabase Storage
   │── storage.getPublicUrl() ──────────►│
   │◄─ publicUrl ───────────────────────│
   │                                     │
-  │── POST /api/reviews (publicUrl) ───► JSON Server
+  │── POST /api/reviews (publicUrl) ───► JSON Server / Backend API
 ```
-The file goes directly from the browser to Supabase Storage. The REST API only stores the resulting public URL.
-An S3 pre-signed URL path exists in `src/api/resources/images.ts` but is currently stubbed — it returns a placeholder Unsplash URL in mock mode.
+
+The file goes directly from the browser to Supabase Storage. The REST API only stores the resulting public URL. In mock mode `StorageConnector` returns a hardcoded placeholder URL.
 
 **Server state (`TanStack React Query`)**
-All data fetching and mutations go through React Query hooks (`src/hooks/`). This provides automatic caching, background re-fetching, and loading/error states without manual `useEffect` patterns. `useSubmitReview` invalidates the relevant query keys on success so the feed and restaurant stats refresh automatically.
+
+All data fetching and mutations go through React Query hooks (`src/hooks/`). Configuration: 2-minute `staleTime`, refetch-on-window-focus disabled, 1 retry. `useSubmitReview` invalidates the relevant query keys on success so the feed and restaurant stats refresh automatically.
 
 **Routing**
+
 ```
 BrowserRouter
   AuthProvider
     Navigation (global)
+    Toaster (Sonner)
     Routes
-      /                    → HomePage
-      /reviews             → ReviewsPage
-      /restaurants         → RestaurantsPage
-      /restaurants/:id     → RestaurantDetailPage
-      /restaurants/:id/review → SubmitReviewPage (ProtectedRoute)
-      /submit              → SubmitReviewPage (ProtectedRoute)
-      /login               → LoginPage
-      /dashboard           → DashboardPage (ProtectedRoute)
-      *                    → NotFoundPage
+      /                          → HomePage
+      /reviews                   → ReviewsPage
+      /restaurants               → RestaurantsPage
+      /restaurants/:id           → RestaurantDetailPage
+      /restaurants/:id/review    → SubmitReviewPage (ProtectedRoute)
+      /submit                    → SubmitReviewPage (ProtectedRoute)
+      /login                     → LoginPage
+      /dashboard                 → DashboardPage (ProtectedRoute)
+      *                          → NotFoundPage
 ```
 
 **CSS architecture**
+
 Global design tokens live in `src/index.css` as CSS custom properties:
-- Colour palette: dark background (`#111110`), amber brand accent, surface/border/text scales, semantic states (error, success, open/closed)
-- Typography: Playfair Display (headings), DM Sans (body) — loaded from Google Fonts
-- Spacing scale: `--space-1` (4px) → `--space-8` (64px)
-- Shadows, border radii, transition speeds
-- Global utility classes: `.btn`, `.btn-primary`, `.btn-ghost`, `.form-*`, `.card`, `.badge`, `.glass`, `.text-muted`
+
+- **Colour palette:** dark background (`#111110`), amber brand accent (`--color-amber`, `--color-amber-dim`, `--color-amber-glow`), surface/border/text scales, semantic states (`--color-error`, `--color-success`, `--color-open`, `--color-closed`)
+- **Typography:** Playfair Display (headings, `--font-display`), DM Sans (body, `--font-body`) — loaded from Google Fonts
+- **Spacing scale:** `--space-1` (4px) → `--space-8` (64px)
+- **Border radii:** `--radius-sm`, `--radius-md`, `--radius-lg`, `--radius-xl`
+- **Shadows:** `--shadow-card`, `--shadow-hover`, `--shadow-amber`
+- **Transitions:** `--transition-fast` (150ms), `--transition-base` (250ms), `--transition-slow` (400ms)
+- **Global utility classes:** `.btn`, `.btn-primary`, `.btn-ghost`, `.btn-danger`, `.form-*`, `.card`, `.badge`, `.badge-open`, `.badge-closed`, `.badge-amber`, `.score-circle`, `.skeleton`, `.glass`, `.empty-state`, `.animate-fade-in-up`, `.animate-fade-in`, `.stagger`, `.text-muted`, `.text-amber`
 
 Each component uses a co-located CSS Module for scoped overrides.
+
+**Path alias**
+
+`@` resolves to `./src` (configured in `vite.config.ts`), enabling clean imports like `import { useAuth } from '@/hooks/auth/useAuth'`.
 
 ---
 
@@ -308,19 +356,22 @@ Each component uses a co-located CSS Module for scoped overrides.
 | `npm run server` | JSON Server on port 3001 (mock REST backend) |
 | `npm run build` | `tsc --noEmit` + `vite build` |
 | `npm run preview` | Serve production build locally |
-| `npm run lint` | ESLint |
+| `npm run lint` / `lint:fix` | ESLint |
+| `npm run format` / `format:check` | Prettier |
 | `npm run test` | Vitest (jsdom environment) |
 
 **Environment variables**
 
 ```
-VITE_USE_MOCK_AUTH=true
+VITE_USE_MOCK_API=false
+VITE_USE_MOCK_AUTH=false
 VITE_SUPABASE_URL=<your-project-url>
 VITE_SUPABASE_ANON_KEY=<your-anon-key>
 VITE_API_URL=http://localhost:3001   # unused at runtime, proxy handles routing
 ```
 
 **Vite proxy**
+
 ```ts
 // vite.config.ts
 proxy: {
@@ -340,8 +391,12 @@ proxy: {
 `src/tests/setup.ts` imports `@testing-library/jest-dom` to extend Vitest matchers.
 
 Current test coverage:
-- `StarRating.test.tsx` — component rendering and interaction
-- `ProtectedRoute.test.tsx` — auth guard redirect behaviour
+
+| File | Coverage |
+|---|---|
+| `isOpenNow.test.ts` | `isOpenNow()` utility — day-range parsing, time parsing, closed detection |
+| `StarRating.test.tsx` | Component rendering and interactive star selection |
+| `ProtectedRoute.test.tsx` | Auth guard redirect behaviour |
 
 ---
 
@@ -351,7 +406,6 @@ Current test coverage:
 |---|---|---|
 | **Mock JWT** | `mock-jwt-token-${email}` string — not a real JWT | Replace with Supabase auth entirely |
 | **Image upload** | Stubbed in mock mode — returns a placeholder URL | Wire up Supabase Storage fully or a presigned-URL endpoint on the backend |
-| **`isOpenNow()`** | Hard-coded 10:00–23:00 heuristic, ignores actual hours field | Parse stored opening hours per day |
 | **Distance calc** | Flat-earth approximation | Haversine formula |
 | **Real-time** | Feed is request-driven, not pushed | Supabase Realtime or SSE for live like counts |
 | **Offline** | No service worker | PWA + cache strategy |
