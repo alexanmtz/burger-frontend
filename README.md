@@ -11,7 +11,7 @@ npm run dev
 ## Local API
 
 npm install -D json-server
-npx json-server db.json --port 3001
+npm run server
 
 ## Architecture
 
@@ -27,5 +27,5 @@ A demo account is available for testing the authenticated flow:
 ## Local development
 
 To run without Supabase auth:
-VITE_USE_REAL_AUTH=false  # uses mock user, no login required
-VITE_USE_REAL_AUTH=true   # full Supabase OIDC flow
+VITE_USE_MOCK_API=false  # full API, development using json-server
+VITE_USE_MOCK_AUTH=false   # full Supabase OIDC auth flow

@@ -1,4 +1,4 @@
-import { authConnector } from '../auth';
+import { authConnector } from '@/api/auth';
 import { HttpFetchConnector } from './http/fetchConnector';
 import { MockFetchConnector } from './mock/fetchConnector';
 import { MockStorageConnector } from './mock/storageConnector';

@@ -19,7 +19,6 @@ describe('isOpenNow', () => {
     vi.useRealTimers();
   });
 
-  // ── Smoke & Stack: Mon–Sun 12:00–22:00 ──────────────────────────────────
   describe('Mon–Sun range (Smoke & Stack)', () => {
     const hours: OpeningHours = [{ day: 'Mon–Sun', hours: '12:00–22:00' }];
 
@@ -82,8 +81,6 @@ describe('isOpenNow', () => {
       expect(isOpenNow(hours)).toBe(false);
     });
   });
-
-  // ── The Patty Collective: Tue–Thu 12–22 / Fri–Sat 12–23 / Sun–Mon Closed ──
   describe('Closed entries (The Patty Collective)', () => {
     const hours: OpeningHours = [
       { day: 'Tue–Thu', hours: '12:00–22:00' },
@@ -116,8 +113,6 @@ describe('isOpenNow', () => {
       expect(isOpenNow(hours)).toBe(false);
     });
   });
-
-  // ── Grind House: Mon–Fri 11:30–22:00 / Sat–Sun 12:00–23:00 ─────────────
   describe('half-hour opening time (Grind House)', () => {
     const hours: OpeningHours = [
       { day: 'Mon–Fri', hours: '11:30–22:00' },
@@ -145,7 +140,6 @@ describe('isOpenNow', () => {
     });
   });
 
-  // ── Edge cases ────────────────────────────────────────────────────────────
   describe('edge cases', () => {
     it('returns false for an empty schedule', () => {
       setFakeTime('2024-03-20T15:00:00');
