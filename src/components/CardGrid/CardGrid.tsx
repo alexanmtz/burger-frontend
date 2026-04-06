@@ -1,6 +1,6 @@
-import { Fragment } from 'react';
-
 import styles from './CardGrid.module.css';
+
+import { Fragment } from 'react';
 
 interface CardGridProps<T extends { id: string }> {
   items: T[] | null;

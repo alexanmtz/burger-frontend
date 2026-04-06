@@ -1,10 +1,10 @@
+import styles from './Hero.module.css';
+
 import { Link } from 'react-router-dom';
 
 import type { User } from '@/types/types';
 
 import heroBurger from '../../assets/hero-burguer.jpg';
-
-import styles from './Hero.module.css';
 
 export const Hero = ({ user }: { user: User | null }) => {
   return (

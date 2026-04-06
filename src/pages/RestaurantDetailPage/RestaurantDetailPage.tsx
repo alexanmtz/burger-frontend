@@ -1,3 +1,5 @@
+import styles from './RestaurantDetailPage.module.css';
+
 import { Link, useParams } from 'react-router-dom';
 
 import { BurgerReviewCard } from '@/components/BurgerReviewCard/BurgerReviewCard';
@@ -8,8 +10,6 @@ import { useReviews } from '@/hooks/reviews/useReviews';
 import { useAuth } from '@/hooks/useAuth';
 import { redirectAfterLogin } from '@/storage/redirectAfterLogin';
 import { isOpenNow } from '@/utils/time';
-
-import styles from './RestaurantDetailPage.module.css';
 
 export function RestaurantDetailPage() {
   const { id = '' } = useParams<{ id: string }>();

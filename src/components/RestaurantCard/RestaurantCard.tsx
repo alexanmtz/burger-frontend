@@ -1,9 +1,9 @@
+import styles from './RestaurantCard.module.css';
+
 import { Link } from 'react-router-dom';
 
 import type { Restaurant } from '@/types/types';
 import { isOpenNow } from '@/utils/time';
-
-import styles from './RestaurantCard.module.css';
 
 interface RestaurantCardProps {
   restaurant: Restaurant;

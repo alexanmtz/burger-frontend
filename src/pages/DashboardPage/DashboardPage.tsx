@@ -1,11 +1,11 @@
+import styles from './DashboardPage.module.css';
+
 import { Link } from 'react-router-dom';
 
 import { BurgerReviewCard } from '@/components/BurgerReviewCard/BurgerReviewCard';
 import { FeedSkeleton } from '@/components/Feed/Feed.skeleton';
 import { useUserReviews } from '@/hooks/reviews/useUserReviews';
 import { useAuth } from '@/hooks/useAuth';
-
-import styles from './DashboardPage.module.css';
 
 export function DashboardPage() {
   const { user } = useAuth();

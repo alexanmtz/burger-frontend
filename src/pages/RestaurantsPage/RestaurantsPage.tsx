@@ -1,3 +1,5 @@
+import styles from './RestaurantsPage.module.css';
+
 import { useState } from 'react';
 
 import { CardGrid } from '@/components/CardGrid/CardGrid';
@@ -8,8 +10,6 @@ import { useGeolocation } from '@/hooks/common/useGeolocation';
 import { useNearbyRestaurants } from '@/hooks/restaurants/useNearbyRestaurants';
 import { useRestaurants } from '@/hooks/restaurants/useRestaurants';
 import { useSearchRestaurants } from '@/hooks/restaurants/useSearchRestaurants';
-
-import styles from './RestaurantsPage.module.css';
 
 export function RestaurantsPage() {
   const [query, setQuery] = useState('');
@@ -45,6 +45,17 @@ export function RestaurantsPage() {
           controls={
             <div className={styles.controls}>
               <div className={styles.searchWrap}>
+                <input
+                  type="search"
+                  className={`form-input ${styles.searchInput}`}
+                  placeholder="Search restaurants"
+                  value={query}
+                  onChange={(e) => {
+                    setQuery(e.target.value);
+                    setUserDismissedNearby(true);
+                  }}
+                  aria-label="Search restaurants"
+                />
                 <svg
                   className={styles.searchIcon}
                   width="16"
@@ -57,17 +68,6 @@ export function RestaurantsPage() {
                   <circle cx="11" cy="11" r="8" />
                   <path d="M21 21l-4.35-4.35" />
                 </svg>
-                <input
-                  type="search"
-                  className={`form-input ${styles.searchInput}`}
-                  placeholder="Search restaurants…"
-                  value={query}
-                  onChange={(e) => {
-                    setQuery(e.target.value);
-                    setUserDismissedNearby(true);
-                  }}
-                  aria-label="Search restaurants"
-                />
               </div>
 
               <button

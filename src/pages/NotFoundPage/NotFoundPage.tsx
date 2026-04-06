@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
-
 import styles from './NotFoundPage.module.css';
+
+import { Link } from 'react-router-dom';
 
 export function NotFoundPage() {
   return (

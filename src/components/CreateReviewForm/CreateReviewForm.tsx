@@ -1,3 +1,5 @@
+import styles from './CreateReviewForm.module.css';
+
 import { useState } from 'react';
 
 import { ImageUpload } from '@/components/ImageUpload/ImageUpload';
@@ -6,8 +8,6 @@ import { useImageUpload } from '@/hooks/common/useImageUpload';
 import { useRestaurants } from '@/hooks/restaurants/useRestaurants';
 import { useSubmitReview } from '@/hooks/reviews/useSubmitReview';
 import type { Restaurant } from '@/types/types';
-
-import styles from './CreateReviewForm.module.css';
 
 interface FormState {
   restaurantId: string;

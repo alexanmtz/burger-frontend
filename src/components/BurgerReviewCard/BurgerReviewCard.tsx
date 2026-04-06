@@ -1,3 +1,5 @@
+import styles from './BurgerReviewCard.module.css';
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -8,8 +10,6 @@ import { formatDate } from '@/utils/time';
 
 import { ScoreBreakdown } from '../ScoreBreakdown/ScoreBreakdown';
 import { StarRating } from '../StarRating/StarRating';
-
-import styles from './BurgerReviewCard.module.css';
 
 interface BurgerReviewCardProps {
   review: Review;

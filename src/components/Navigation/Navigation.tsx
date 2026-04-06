@@ -1,10 +1,10 @@
+import styles from './Navigation.module.css';
+
 import { useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '@/hooks/useAuth';
 import { redirectAfterLogin } from '@/storage/redirectAfterLogin';
-
-import styles from './Navigation.module.css';
 
 export function Navigation() {
   const { user, signOut } = useAuth();

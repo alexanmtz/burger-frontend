@@ -30,18 +30,12 @@ export default defineConfig([
         'error',
         {
           groups: [
-            // Side-effect imports
-            ['^\\u0000'],
-            // React / framework first
-            ['^react', '^react-dom', '^react-router'],
-            // External packages
-            ['^@?\\w'],
-            // Internal aliases (@/)
-            ['^@/'],
-            // Relative imports
-            ['^\\.'],
-            // Style imports last
             ['^.+\\.module\\.css$', '^.+\\.css$'],
+            ['^\\u0000'],
+            ['^react', '^react-dom', '^react-router'],
+            ['^@?\\w'],
+            ['^@/'],
+            ['^\\.']
           ],
         },
       ],

@@ -1,6 +1,6 @@
-import { type ChangeEvent, type DragEvent, useRef, useState } from 'react';
-
 import styles from './ImageUpload.module.css';
+
+import { type ChangeEvent, type DragEvent, useRef, useState } from 'react';
 
 interface Props {
   onFileSelect: (file: File) => void;
