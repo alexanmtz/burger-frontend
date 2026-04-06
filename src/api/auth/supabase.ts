@@ -11,7 +11,7 @@ function toSessionUser(sbUser: {
     name: sbUser.user_metadata?.name ?? sbUser.email ?? 'Unknown',
     email: sbUser.email ?? '',
     avatar: sbUser.user_metadata?.avatar_url ?? '',
-    bio: sbUser.user_metadata?.bio ?? ''
+    bio: sbUser.user_metadata?.bio ?? '',
   };
 }
 

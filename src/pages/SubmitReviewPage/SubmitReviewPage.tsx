@@ -11,7 +11,7 @@ export function SubmitReviewPage() {
   const { data: restaurant } = useRestaurant(restaurantId ?? '');
 
   const handleSuccess = () => {
-    if(restaurantId) {
+    if (restaurantId) {
       navigate(`/restaurants/${restaurantId}`);
       return;
     }

@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { Feed } from '@/components/Feed/Feed';
 import { FeedControls } from '@/components/FeedControls/FeedControls';
 import { Hero } from '@/components/Hero/Hero';
-import { useFeed } from '@/hooks/feed/useFeed';
 import { useAuth } from '@/hooks/auth/useAuth';
+import { useFeed } from '@/hooks/feed/useFeed';
 
 type Sort = 'recent' | 'top';
 

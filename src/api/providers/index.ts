@@ -1,5 +1,5 @@
 import { authConnector } from '../auth';
-import { RealFetchConnector } from './http/fetchConnector';
+import { HttpFetchConnector } from './http/fetchConnector';
 import { MockFetchConnector } from './mock/fetchConnector';
 import { MockStorageConnector } from './mock/storageConnector';
 import { SupabaseStorageConnector } from './supabase/storageConnector';
@@ -14,4 +14,4 @@ export const storageConnector: StorageConnector = USE_MOCK_AUTH
 
 export const fetchConnector: FetchConnector = USE_MOCK_API
   ? new MockFetchConnector()
-  : new RealFetchConnector(authConnector);
+  : new HttpFetchConnector(authConnector);

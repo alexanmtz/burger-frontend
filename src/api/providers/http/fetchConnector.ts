@@ -3,7 +3,7 @@ import type { FetchConnector } from '../types';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-export class RealFetchConnector implements FetchConnector {
+export class HttpFetchConnector implements FetchConnector {
   constructor(private auth: AuthConnector) {}
 
   async fetch<T>(path: string, options: RequestInit = {}): Promise<T> {

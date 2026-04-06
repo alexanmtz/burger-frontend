@@ -5,9 +5,9 @@ import { Link, useParams } from 'react-router-dom';
 import { BurgerReviewCard } from '@/components/BurgerReviewCard/BurgerReviewCard';
 import { OpeningHours } from '@/components/OpeningHours/OpeningHours';
 import { RestaurantInfo } from '@/components/RestaurantInfo/RestaurantInfo';
+import { useAuth } from '@/hooks/auth/useAuth';
 import { useRestaurant } from '@/hooks/restaurants/useRestaurant';
 import { useReviews } from '@/hooks/reviews/useReviews';
-import { useAuth } from '@/hooks/auth/useAuth';
 import { redirectAfterLogin } from '@/storage/redirectAfterLogin';
 import { isOpenNow } from '@/utils/time';
 
