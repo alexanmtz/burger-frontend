@@ -48,7 +48,7 @@
 │  │  Deployed to: Vercel            │       ┌───────────────────────────────┐    │
 │  │  ─ static build (vite build)    │ ────► │  Burger Backend APIs          │    │
 │  │  ─ served from Vercel edge      │       │  (microservices, future)      │    │
-│  │  ─ automatic HTTPS + CDN        │       │  Proxied via /api in dev      │    │
+│  │  ─ automatic HTTPS + CDN        │       │  Proxied via json-server (dev)│    │
 │  │  ─ preview deploys per PR       │       └───────────────────────────────┘    │
 │  └─────────────────────────────────┘                                             │
 │                                                                                  │
@@ -56,7 +56,7 @@
 │  │  JSON Server (dev only)         │                                             │
 │  │  ──────────────────────────     │                                             │
 │  │  Port 3001, file-based DB       │                                             │
-│  │  Proxied via Vite: /api →       │                                             │
+│  │  Proxied via Vite: / →          │                                             │
 │  │  localhost:3001                 │                                             │
 │  └─────────────────────────────────┘                                             │
 └──────────────────────────────────────────────────────────────────────────────────┘
